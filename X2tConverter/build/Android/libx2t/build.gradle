@@ -19,7 +19,7 @@ android {
         externalNativeBuild {
             cmake {
                 arguments "-DANDROID_TOOLCHAIN=clang",
-                          "-DANDROID_STL=c++_static",
+                          "-DANDROID_STL=c++_shared",
                           "-DANDROID_ARM_NEON=TRUE",
                           "-DARG_PATH_LIB_3D_PARTY=${getProjectPath(PATH_LIB_3D_PARTY)}",
                           "-DARG_PATH_LIB_DST=${getProjectPath(PATH_LIB_DST, true)}",

@@ -257,7 +257,7 @@ class X2t private constructor() {
             mInputParams.key = UUID.randomUUID().toString()
             with(mInputParams)
             {
-                setFonts(arrayOf(fontsJs), fontsDir)
+                //setFonts(arrayOf(fontsJs), fontsDir)
                 createXmlFileTransform(xml, key, mConvertType, from, to, temp, fontsJs, theme, password,
                     delimiterCode.equals(
                         InputParams.DELIMITER_CODE_NONE
@@ -278,7 +278,7 @@ class X2t private constructor() {
                 result.code = convertFile(xml!!)
             }
 
-            FileUtils.deletePath(cache.temp!!)
+            //FileUtils.deletePath(cache.temp!!)
 
             if (mIsClearTemp) {
                 FileUtils.deletePath(cache.root!!)
