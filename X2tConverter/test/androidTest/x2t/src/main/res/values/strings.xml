@@ -3,4 +3,23 @@
     <string name="text_choose">Choose document for convertType...</string>
     <string name="button_choose">Choose file</string>
     <string name="button_convert">Start convertType</string>
+    <string name="button_export">Export</string>
+<!--docs-->
+    <string name="docx">DOCX</string>
+    <string name="odt">ODT</string>
+    <string name="rtf">RTF</string>
+    <string name="txt">TXT</string>
+    <string name="dotx">DOTX</string>
+    <string name="ott">OTT</string>
+<!--slides-->
+    <string name="pptx">PPTX</string>
+    <string name="odp">ODP</string>
+    <string name="potx">POTX</string>>
+    <string name="otp">OTP</string>
+<!--cells-->
+    <string name="xlsx">XLSX</string>
+    <string name="ods">ODS</string>
+    <string name="csv">CSV</string>>
+    <string name="xlts">XLTX</string>
+    <string name="ots">OTS</string>
 </resources>

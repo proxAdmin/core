@@ -224,7 +224,6 @@ class X2t private constructor() {
 
     }
 
-
     @RequiresPermission(allOf = [READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE])
     fun convert(context: Context): ConvertResult {
         val result = ConvertResult()
@@ -278,7 +277,7 @@ class X2t private constructor() {
                 result.code = convertFile(xml!!)
             }
 
-            //FileUtils.deletePath(cache.temp!!)
+            FileUtils.deletePath(cache.temp!!)
 
             if (mIsClearTemp) {
                 FileUtils.deletePath(cache.root!!)
