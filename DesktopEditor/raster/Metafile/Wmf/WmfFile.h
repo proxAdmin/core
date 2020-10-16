@@ -69,6 +69,8 @@ namespace MetaFile
 			}
 			else
 			{
+				double dLogicalToMM = 25.4 / 96;
+				oBounds *= dLogicalToMM;
 				// TODO:
 			}
 			return oBounds;
@@ -747,7 +749,7 @@ namespace MetaFile
 					TranslatePoint(nX, nY, dX, dY);
 					TranslatePoint(nX + nW, nY + nH, dX1, dY1);
 
-					m_pOutput->DrawBitmap(dX, dY, fabs(dX1 - dX), fabs(dY1 - dY), pBgra, unWidth, unHeight);
+					m_pOutput->DrawBitmap(dX, dY, dX1 - dX, dY1 - dY, pBgra, unWidth, unHeight);
 				}
 
 				if (pBgra)
