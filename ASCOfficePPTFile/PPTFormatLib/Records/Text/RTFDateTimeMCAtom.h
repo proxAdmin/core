@@ -31,14 +31,34 @@
  */
 #pragma once
 
-#include "KinsokuContainer.h"
-#include "FontCollectionContainer.h"
+#include "../../Reader/Records.h"
 
 namespace PPT_FORMAT
 {
-class CRecordDocumentTextInfoContainer : public CUnknownRecord
-{
-public:
 
+class CRecordRTFDateTimeMCAtom : public CUnknownRecord
+{
+    _INT32          m_positon;
+    std::wstring    m_format;
+
+    virtual void ReadFromStream(SRecordHeader & oHeader, POLE::Stream* pStream)
+    {
+        m_oHeader = oHeader;
+
+        m_positon = StreamUtils::ReadLONG(pStream);
+
+        m_format.clear();
+        LONG lPos(0); StreamUtils::StreamPosition(lPos, pStream);
+        for (int i = 0; i < 64; i++)
+        {
+            WCHAR symbol = StreamUtils::ReadWORD(pStream);
+            if (symbol == L'\0')
+                break;
+
+            m_format.push_back(symbol);
+        }
+        StreamUtils::StreamSeek(lPos + 128, pStream);
+    }
 };
+
 }

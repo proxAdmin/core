@@ -366,7 +366,7 @@ enum SlideSizeEnum
 };
 
 
-enum TextAlignmentEnum
+enum TextAlignmentEnum : USHORT
 {
     Tx_ALIGNLeft,
     Tx_ALIGNCenter,
@@ -432,14 +432,14 @@ enum TextBuildSubEffectEnum
 };
 
 
-enum TextDirectionEnum
+enum TextDirectionEnum : USHORT
 {
     LeftToRight,
     RightToLeft
 };
 
 
-enum TextFontAlignmentEnum
+enum TextFontAlignmentEnum : USHORT
 {
     Tx_ALIGNFONTRoman,
     Tx_ALIGNFONTHanging,

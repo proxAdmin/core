@@ -31,14 +31,47 @@
  */
 #pragma once
 
-#include "KinsokuContainer.h"
-#include "FontCollectionContainer.h"
+#include "FontCollectionEntry.h"
+
 
 namespace PPT_FORMAT
 {
-class CRecordDocumentTextInfoContainer : public CUnknownRecord
+class CRecordFontCollectionContainer : public CUnknownRecord
 {
 public:
+    std::vector<CRecordFontCollectionEntry*> m_rgFontCollectionEntry;
 
+public:
+    virtual ~CRecordFontCollectionContainer()
+    {
+        for (auto pEl : m_rgFontCollectionEntry)
+        {
+            RELEASEOBJECT(pEl)
+        }
+    }
+
+    virtual void ReadFromStream(SRecordHeader &oHeader, POLE::Stream *pStream)
+    {
+        m_oHeader			=	oHeader;
+        LONG lPos			=	0;
+        StreamUtils::StreamPosition ( lPos, pStream );
+
+        UINT lCurLen		=	0;
+
+        SRecordHeader ReadHeader;
+
+        while ( lCurLen < m_oHeader.RecLen )
+        {
+            if ( ReadHeader.ReadFromStream(pStream) == false)
+                break;
+
+            lCurLen += 8 + ReadHeader.RecLen;
+
+            auto pRec = new CRecordFontCollectionEntry;
+            pRec->ReadFromStream(ReadHeader, pStream);
+            m_rgFontCollectionEntry.push_back(pRec);
+        }
+        StreamUtils::StreamSeek(lPos + m_oHeader.RecLen, pStream);
+    }
 };
 }

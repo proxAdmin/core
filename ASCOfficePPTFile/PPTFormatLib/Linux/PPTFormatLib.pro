@@ -488,6 +488,14 @@ HEADERS += \
     ../Records/GuideAtom.h \
     ../Records/HeadersFootersAtom.h \
     ../Records/InteractiveInfoAtom.h \
+    ../Records/Text/DateTimeMCAtom.h \
+    ../Records/Text/FontCollection10Container.h \
+    ../Records/Text/FontCollectionContainer.h \
+    ../Records/Text/FontCollectionEntry.h \
+    ../Records/Text/FontEmbedFlags10Atom.h \
+    ../Records/Text/FooterMCAtom.h \
+    ../Records/Text/GenericDateMCAtom.h \
+    ../Records/Text/HeaderMCAtom.h \
     ../Records/Text/Kinsoku9Container.h \
     ../Records/Text/KinsokuAtom.h \
     ../Records/Text/KinsokuContainer.h \
@@ -539,11 +547,19 @@ HEADERS += \
     ../Records/SSlideLayoutAtom.h \
     ../Records/SSSlideInfoAtom.h \
     ../Records/StyleTextPropAtom.h \
+    ../Records/Text/RTFDateTimeMCAtom.h \
+    ../Records/Text/SlideNumberMCAtom.h \
     ../Records/Text/StyleTextProp9Atom.h \
+    ../Records/Text/StyleTextPropAtom.h \
+    ../Records/Text/TabStops.h \
+    ../Records/Text/TextCFException.h \
+    ../Records/Text/TextCFException10.h \
     ../Records/Text/TextCFException9.h \
     ../Records/Text/TextDefaults9Atom.h \
     ../Records/Text/TextMasterStyle9Atom.h \
     ../Records/Text/TextMasterStyle9Level.h \
+    ../Records/Text/TextPFException.h \
+    ../Records/Text/TextPFExceptionAtom.h \
     ../Records/Text/TextSIException.h \
     ../Records/TextBookmarkAtom.h \
     ../Records/TextBytesAtom.h \

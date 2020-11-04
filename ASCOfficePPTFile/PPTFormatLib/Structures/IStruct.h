@@ -35,7 +35,9 @@
 #include  "../../../Common/DocxFormat/Source/SystemUtility/File.h"
 
 namespace PPT_FORMAT {
-struct IStruct {
+struct IStruct
+{
+    virtual ~IStruct() = 0;
     virtual void ReadFromStream (POLE::Stream* pStream) = 0;
 };
 }

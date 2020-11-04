@@ -31,14 +31,25 @@
  */
 #pragma once
 
-#include "KinsokuContainer.h"
-#include "FontCollectionContainer.h"
+#include "../Reader/Records.h"
+
 
 namespace PPT_FORMAT
 {
-class CRecordDocumentTextInfoContainer : public CUnknownRecord
+class CRecordFontEmbedFlags10Atom : public CUnknownRecord
 {
 public:
+    bool m_fSubset;
+    bool m_fSubsetOptionConfirmed;
+
+    virtual void ReadFromStream(SRecordHeader & oHeader, POLE::Stream* pStream)
+    {
+        m_oHeader = oHeader;
+
+        _UINT32 flags = StreamUtils::ReadDWORD(pStream);
+        m_fSubset                   = 0x1 & flags;
+        m_fSubsetOptionConfirmed    = 0x2 & flags;
+    }
 
 };
 }

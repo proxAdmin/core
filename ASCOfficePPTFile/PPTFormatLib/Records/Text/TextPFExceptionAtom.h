@@ -30,15 +30,8 @@
  *
  */
 #pragma once
+#include "TextPFException.h"
 
-#include "KinsokuContainer.h"
-#include "FontCollectionContainer.h"
 
 namespace PPT_FORMAT
 {
-class CRecordDocumentTextInfoContainer : public CUnknownRecord
-{
-public:
-
-};
-}

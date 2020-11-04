@@ -31,14 +31,37 @@
  */
 #pragma once
 
-#include "KinsokuContainer.h"
-#include "FontCollectionContainer.h"
+#include "../../Structures/IStruct.h"
+#include "../../Enums/enums.h"
 
 namespace PPT_FORMAT
 {
-class CRecordDocumentTextInfoContainer : public CUnknownRecord
+struct STabStop : public IStruct
 {
-public:
+    SHORT               m_position;
+    TextTabTypeEnum     m_type;
 
+    virtual void ReadFromStream (POLE::Stream* pStream)
+    {
+        m_position  = StreamUtils::ReadSHORT(pStream);
+        m_type      = (TextTabTypeEnum)StreamUtils::ReadSHORT(pStream);
+    }
+};
+
+struct STabStops : public IStruct
+{
+    USHORT m_count;
+    std::vector<STabStop> m_rgTabStop;
+
+    virtual void ReadFromStream (POLE::Stream* pStream)
+    {
+        m_count  = StreamUtils::ReadSHORT(pStream);
+        for (unsigned i = 0; i < m_count; i++)
+        {
+            STabStop tabStop;
+            tabStop.ReadFromStream(pStream);
+            m_rgTabStop.push_back(tabStop);
+        }
+    }
 };
 }

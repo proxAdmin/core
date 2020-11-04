@@ -30,15 +30,27 @@
  *
  */
 #pragma once
-
-#include "KinsokuContainer.h"
-#include "FontCollectionContainer.h"
+#include "CFMasks.h"
 
 namespace PPT_FORMAT
 {
-class CRecordDocumentTextInfoContainer : public CUnknownRecord
+struct STextCFException10
 {
-public:
+    SCFMasks            m_masks;
+    nullable<USHORT>    m_newEAFontRef;
+    nullable<USHORT>    m_csFontRef;
+    nullable<_UINT32>     m_pp11ext;
 
+    virtual void ReadFromStream(POLE::Stream* pStream)
+    {
+        m_masks.ReadFromStream(pStream);
+
+        if (m_masks.m_newEATypeface)
+            m_newEAFontRef  = new USHORT(StreamUtils::ReadSHORT(pStream));
+        if (m_masks.m_csTypeface)
+            m_newEAFontRef  = new USHORT(StreamUtils::ReadSHORT(pStream));
+        if (m_masks.m_pp11ext)
+            m_pp11ext       = new _UINT32(StreamUtils::ReadDWORD(pStream));
+    }
 };
 }
