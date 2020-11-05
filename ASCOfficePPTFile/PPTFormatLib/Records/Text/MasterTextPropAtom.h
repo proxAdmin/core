@@ -31,22 +31,47 @@
  */
 #pragma once
 
-#include "../../Reader/Records.h"
+#include "FontCollectionEntry.h"
+#include "../../Structures/IStruct.h"
 
 namespace PPT_FORMAT
 {
-
-class CRecordGenericDateMCAtom : public CUnknownRecord
+struct SMasterTextPropRun : public IStruct
 {
-public:
-    _INT32 m_positon;
+    _UINT32 m_count;
+    USHORT  m_indentLevel;
 
-    virtual void ReadFromStream(SRecordHeader & oHeader, POLE::Stream* pStream)
+    virtual void ReadFromStream (POLE::Stream* pStream)
     {
-        m_oHeader = oHeader;
-
-        m_positon = StreamUtils::ReadLONG(pStream);
+        m_count         = StreamUtils::ReadDWORD(pStream);
+        m_indentLevel   = StreamUtils::ReadWORD(pStream);
     }
 };
 
+class CRecordMasterTextPropAtom : public CUnknownRecord
+{
+public:
+    std::vector<SMasterTextPropRun> m_rgMasterTextPropRun;
+
+
+    virtual void ReadFromStream(SRecordHeader &oHeader, POLE::Stream *pStream)
+    {
+        m_oHeader			=	oHeader;
+        LONG lPos			=	0;
+        StreamUtils::StreamPosition ( lPos, pStream );
+
+        LONG lCurPos		=	0;
+        StreamUtils::StreamPosition ( lCurPos, pStream );
+
+        while ( lPos + m_oHeader.RecLen > lCurPos)
+        {
+            SMasterTextPropRun style;
+            style.ReadFromStream(pStream);
+            m_rgMasterTextPropRun.push_back(style);
+
+            StreamUtils::StreamPosition ( lCurPos, pStream );
+        }
+        StreamUtils::StreamSeek(lPos + m_oHeader.RecLen, pStream);
+    }
+};
 }

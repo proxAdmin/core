@@ -30,23 +30,11 @@
  *
  */
 #pragma once
+#include "MouseClickTextInteractiveInfoAtom.h"
+#include "MouseOverTextInteractiveInfoAtom.h"
 
-#include "../../Reader/Records.h"
 
 namespace PPT_FORMAT
 {
-
-class CRecordGenericDateMCAtom : public CUnknownRecord
-{
-public:
-    _INT32 m_positon;
-
-    virtual void ReadFromStream(SRecordHeader & oHeader, POLE::Stream* pStream)
-    {
-        m_oHeader = oHeader;
-
-        m_positon = StreamUtils::ReadLONG(pStream);
-    }
-};
-
+//class CRecord
 }

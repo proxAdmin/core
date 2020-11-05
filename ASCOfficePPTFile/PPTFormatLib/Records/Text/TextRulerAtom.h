@@ -30,23 +30,24 @@
  *
  */
 #pragma once
+#include "../Reader/Records.h"
+#include "TextRuler.h"
 
-#include "../../Reader/Records.h"
 
 namespace PPT_FORMAT
 {
-
-class CRecordGenericDateMCAtom : public CUnknownRecord
+class CRecordTextRulerAtom : public CUnknownRecord
 {
 public:
-    _INT32 m_positon;
+    STextRuler m_TextRuler;
+
 
     virtual void ReadFromStream(SRecordHeader & oHeader, POLE::Stream* pStream)
     {
         m_oHeader = oHeader;
 
-        m_positon = StreamUtils::ReadLONG(pStream);
+        m_TextRuler.ReadFromStream(pStream);
     }
-};
 
+};
 }

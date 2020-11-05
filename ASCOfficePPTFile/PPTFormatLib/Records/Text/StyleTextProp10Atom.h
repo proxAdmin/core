@@ -31,22 +31,34 @@
  */
 #pragma once
 
-#include "../../Reader/Records.h"
+#include "../Reader/Records.h"
+#include "TextCFException10.h"
+
 
 namespace PPT_FORMAT
 {
-
-class CRecordGenericDateMCAtom : public CUnknownRecord
+class CRecordStyleTextProp10Atom : public CUnknownRecord
 {
-public:
-    _INT32 m_positon;
+    std::vector<STextCFException10> rgStyleTextProp10;
 
-    virtual void ReadFromStream(SRecordHeader & oHeader, POLE::Stream* pStream)
+    virtual void ReadFromStream(SRecordHeader &oHeader, POLE::Stream *pStream)
     {
-        m_oHeader = oHeader;
+        m_oHeader			=	oHeader;
+        LONG lPos			=	0;
+        StreamUtils::StreamPosition ( lPos, pStream );
 
-        m_positon = StreamUtils::ReadLONG(pStream);
+        LONG lCurPos		=	0;
+        StreamUtils::StreamPosition ( lCurPos, pStream );
+
+        while ( lPos + m_oHeader.RecLen > lCurPos)
+        {
+            STextCFException10 style;
+            style.ReadFromStream(pStream);
+            rgStyleTextProp10.push_back(style);
+
+            StreamUtils::StreamPosition ( lCurPos, pStream );
+        }
+        StreamUtils::StreamSeek(lPos + m_oHeader.RecLen, pStream);
     }
 };
-
 }

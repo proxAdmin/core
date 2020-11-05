@@ -30,23 +30,23 @@
  *
  */
 #pragma once
-
+#include "TextRange.h"
 #include "../../Reader/Records.h"
+
 
 namespace PPT_FORMAT
 {
 
-class CRecordGenericDateMCAtom : public CUnknownRecord
+class CRecordMouseClickTextInteractiveInfoAtom : public CUnknownRecord
 {
 public:
-    _INT32 m_positon;
+    STextRange m_range;
 
     virtual void ReadFromStream(SRecordHeader & oHeader, POLE::Stream* pStream)
     {
         m_oHeader = oHeader;
 
-        m_positon = StreamUtils::ReadLONG(pStream);
+        m_range.ReadFromStream(pStream);
     }
 };
-
 }

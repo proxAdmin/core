@@ -489,6 +489,7 @@ HEADERS += \
     ../Records/HeadersFootersAtom.h \
     ../Records/InteractiveInfoAtom.h \
     ../Records/Text/DateTimeMCAtom.h \
+    ../Records/Text/DefaultRulerAtom.h \
     ../Records/Text/FontCollection10Container.h \
     ../Records/Text/FontCollectionContainer.h \
     ../Records/Text/FontCollectionEntry.h \
@@ -512,8 +513,12 @@ HEADERS += \
     ../Records/NoZoomViewInfoAtom.h \
     ../Records/OutlineTextRefAtom.h \
     ../Records/Text/DocumentTextInfoContainer.h \
+    ../Records/Text/MasterTextPropAtom.h \
+    ../Records/Text/MouseClickTextInteractiveInfoAtom.h \
+    ../Records/Text/MouseOverTextInteractiveInfoAtom.h \
     ../Records/Text/OutlineTextProps9Container.h \
     ../Records/Text/OutlineTextPropsHeaderExAtom.h \
+    ../Records/Text/OutlineTextRefAtom.h \
     ../Records/Text/PFMasks.h \
     ../Records/PersistDirectoryAtom.h \
     ../Records/PlaceHolderAtom.h \
@@ -549,22 +554,31 @@ HEADERS += \
     ../Records/StyleTextPropAtom.h \
     ../Records/Text/RTFDateTimeMCAtom.h \
     ../Records/Text/SlideNumberMCAtom.h \
+    ../Records/Text/StyleTextProp10Atom.h \
+    ../Records/Text/StyleTextProp11Atom.h \
     ../Records/Text/StyleTextProp9Atom.h \
     ../Records/Text/StyleTextPropAtom.h \
     ../Records/Text/TabStops.h \
+    ../Records/Text/TextBookmarkAtom.h \
+    ../Records/Text/TextBytesAtom.h \
     ../Records/Text/TextCFException.h \
     ../Records/Text/TextCFException10.h \
     ../Records/Text/TextCFException9.h \
     ../Records/Text/TextDefaults9Atom.h \
+    ../Records/Text/TextInteractiveInfoInstance.h \
     ../Records/Text/TextMasterStyle9Atom.h \
     ../Records/Text/TextMasterStyle9Level.h \
+    ../Records/Text/TextMasterStyleAtom.h \
     ../Records/Text/TextPFException.h \
-    ../Records/Text/TextPFExceptionAtom.h \
+    ../Records/Text/TextRange.h \
+    ../Records/Text/TextRuler.h \
+    ../Records/Text/TextRulerAtom.h \
     ../Records/Text/TextSIException.h \
+    ../Records/Text/TextSpecialInfoAtom.h \
     ../Records/TextBookmarkAtom.h \
     ../Records/TextBytesAtom.h \
     ../Records/TextCFExceptionAtom.h \
-    ../Records/TextCharsAtom.h \
+    ../Records/Text/TextCharsAtom.h \
     ../Records/TextFullSettings.h \
     ../Records/TextHeaderAtom.h \
     ../Records/TextInteractiveInfoAtom.h \

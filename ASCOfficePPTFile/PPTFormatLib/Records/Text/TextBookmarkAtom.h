@@ -36,16 +36,20 @@
 namespace PPT_FORMAT
 {
 
-class CRecordGenericDateMCAtom : public CUnknownRecord
+class CRecordTextBookmarkAtom : public CUnknownRecord
 {
 public:
-    _INT32 m_positon;
+    _INT32 m_begin;
+    _INT32 m_end;
+    _INT32 m_bookmarkID;
 
     virtual void ReadFromStream(SRecordHeader & oHeader, POLE::Stream* pStream)
     {
         m_oHeader = oHeader;
 
-        m_positon = StreamUtils::ReadLONG(pStream);
+        m_begin         = StreamUtils::ReadLONG(pStream);
+        m_end           = StreamUtils::ReadLONG(pStream);
+        m_bookmarkID    = StreamUtils::ReadLONG(pStream);
     }
 };
 

@@ -30,23 +30,50 @@
  *
  */
 #pragma once
-
-#include "../../Reader/Records.h"
+#include "TextSIException.h"
 
 namespace PPT_FORMAT
 {
-
-class CRecordGenericDateMCAtom : public CUnknownRecord
+struct STextSIRun : public IStruct
 {
-public:
-    _INT32 m_positon;
+    _UINT32             m_count;
+    STextSIException    m_si;
 
-    virtual void ReadFromStream(SRecordHeader & oHeader, POLE::Stream* pStream)
+    void ReadFromStream(POLE::Stream* pStream)
     {
-        m_oHeader = oHeader;
-
-        m_positon = StreamUtils::ReadLONG(pStream);
+        m_count = StreamUtils::ReadDWORD(pStream);
+        m_si.ReadFromStream(pStream);
     }
 };
 
+
+class CRecordTextSpecialInfoAtom : public CUnknownRecord
+{
+public:
+    std::vector<STextSIRun> m_rgSIRun;
+
+    virtual void ReadFromStream(SRecordHeader &oHeader, POLE::Stream *pStream)
+    {
+        m_oHeader			=	oHeader;
+        LONG lPos			=	0;
+        StreamUtils::StreamPosition ( lPos, pStream );
+
+        UINT lCurLen		=	0;
+
+        SRecordHeader ReadHeader;
+
+        while ( lCurLen < m_oHeader.RecLen )
+        {
+            if ( ReadHeader.ReadFromStream(pStream) == false)
+                break;
+
+            lCurLen += 8 + ReadHeader.RecLen;
+
+            STextSIRun textSIRun;
+            textSIRun.ReadFromStream(pStream);
+            m_rgSIRun.push_back(textSIRun);
+        }
+        StreamUtils::StreamSeek(lPos + m_oHeader.RecLen, pStream);
+    }
+};
 }

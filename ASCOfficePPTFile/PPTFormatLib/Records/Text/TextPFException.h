@@ -147,4 +147,19 @@ struct STextPFException : public IStruct
                         (TextDirectionEnum)StreamUtils::ReadWORD(pStream));
     }
 };
+
+class CRecordTextPFExceptionAtom : public CUnknownRecord
+{
+public:
+    STextPFException m_pf;
+
+    virtual void ReadFromStream(SRecordHeader & oHeader, POLE::Stream* pStream)
+    {
+        m_oHeader = oHeader;
+
+        StreamUtils::StreamSkip(2, pStream);
+
+        m_pf.ReadFromStream(pStream);
+    }
+};
 }

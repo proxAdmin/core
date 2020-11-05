@@ -31,22 +31,19 @@
  */
 #pragma once
 
-#include "../../Reader/Records.h"
+#include "../../Structures/IStruct.h"
 
 namespace PPT_FORMAT
 {
-
-class CRecordGenericDateMCAtom : public CUnknownRecord
+struct STextRange : public IStruct
 {
-public:
-    _INT32 m_positon;
+    _UINT32 m_begin;
+    _UINT32 m_end;
 
-    virtual void ReadFromStream(SRecordHeader & oHeader, POLE::Stream* pStream)
+    void ReadFromStream(POLE::Stream* pStream)
     {
-        m_oHeader = oHeader;
-
-        m_positon = StreamUtils::ReadLONG(pStream);
+        m_begin = StreamUtils::ReadDWORD(pStream);
+        m_end   = StreamUtils::ReadDWORD(pStream);
     }
 };
-
 }

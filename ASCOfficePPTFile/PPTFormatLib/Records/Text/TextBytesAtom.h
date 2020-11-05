@@ -36,17 +36,16 @@
 namespace PPT_FORMAT
 {
 
-class CRecordGenericDateMCAtom : public CUnknownRecord
+class CRecordTextBytesAtom : public CUnknownRecord
 {
 public:
-    _INT32 m_positon;
+    std::wstring m_textBytes;
 
     virtual void ReadFromStream(SRecordHeader & oHeader, POLE::Stream* pStream)
     {
         m_oHeader = oHeader;
-
-        m_positon = StreamUtils::ReadLONG(pStream);
+        m_textBytes = StreamUtils::ReadStringW(pStream, m_oHeader.RecLen / 2);
     }
-};
 
+};
 }
