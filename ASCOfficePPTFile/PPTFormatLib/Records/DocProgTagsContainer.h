@@ -115,25 +115,10 @@ public:
     }
 };
 
-class CRecordGridSpacing10Atom : public CUnknownRecord
-{
-public:
-    _INT32 m_x;
-    _INT32 m_y;
-
-    virtual void ReadFromStream ( SRecordHeader & oHeader, POLE::Stream* pStream )
-    {
-        m_oHeader			=	oHeader;
-
-        m_x = StreamUtils::ReadLONG(pStream);
-        m_y = StreamUtils::ReadLONG(pStream);
-    }
-};
 
 class CRecordPP10DocBinaryTagExtension : public CUnknownRecord
 {
 public:
-    CRecordGridSpacing10Atom m_gridSpacingAtom;
 
     CRecordPP10DocBinaryTagExtension ()
     {
@@ -150,28 +135,6 @@ public:
 
         LONG lPos			=	0;
         StreamUtils::StreamPosition ( lPos, pStream );
-
-        SRecordHeader ReadHeader;
-
-        LONG lCurLen = 0;
-        while (lCurLen < m_oHeader.RecLen)
-        {
-            if ( ReadHeader.ReadFromStream(pStream) == false)
-                break;
-
-            lCurLen += 8 + ReadHeader.RecLen;
-            switch (ReadHeader.RecType)
-            {
-            case RT_GridSpacing10Atom:
-            {
-                m_gridSpacingAtom.ReadFromStream(ReadHeader, pStream);
-                break;
-            }
-            default:
-                StreamUtils::StreamSkip(ReadHeader.RecLen, pStream);
-                break;
-            }
-        }
 
         StreamUtils::StreamSeek ( lPos + m_oHeader.RecLen, pStream );
     }
@@ -206,22 +169,10 @@ public:
 
 };
 
-class CRecordRoundTripDocFlags12Atom : public CUnknownRecord
-{
-public:
-    bool m_fCompressPicturesOnSave;
-
-    virtual void ReadFromStream ( SRecordHeader & oHeader, POLE::Stream* pStream )
-    {
-        m_oHeader = oHeader;
-        m_fCompressPicturesOnSave = 0x1 & StreamUtils::ReadBYTE(pStream);
-    }
-};
 
 class CRecordPP12DocBinaryTagExtension : public CUnknownRecord
 {
 public:
-    CRecordRoundTripDocFlags12Atom m_rtDocFlagsAtom;
 
     CRecordPP12DocBinaryTagExtension()
     {
@@ -237,28 +188,6 @@ public:
         m_oHeader			=	oHeader;
         LONG lPos			=	0;
         StreamUtils::StreamPosition ( lPos, pStream );
-
-        SRecordHeader ReadHeader;
-
-        LONG lCurLen = 0;
-        while (lCurLen < m_oHeader.RecLen)
-        {
-            if ( ReadHeader.ReadFromStream(pStream) == false)
-                break;
-
-            lCurLen += 8 + ReadHeader.RecLen;
-            switch (ReadHeader.RecType)
-            {
-            case RT_RoundTripDocFlags12Atom:
-            {
-                m_rtDocFlagsAtom.ReadFromStream(ReadHeader, pStream);
-                break;
-            }
-            default:
-                StreamUtils::StreamSkip(ReadHeader.RecLen, pStream);
-                break;
-            }
-        }
 
         StreamUtils::StreamSeek ( lPos + m_oHeader.RecLen, pStream );
     }

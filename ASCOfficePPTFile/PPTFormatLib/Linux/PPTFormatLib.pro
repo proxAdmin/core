@@ -488,11 +488,10 @@ HEADERS += \
     ../Records/GuideAtom.h \
     ../Records/HeadersFootersAtom.h \
     ../Records/InteractiveInfoAtom.h \
-    ../Records/Text/Kinsoku9Container.h \
-    ../Records/Text/KinsokuAtom.h \
-    ../Records/Text/KinsokuContainer.h \
-    ../Records/Text/KinsokuFollowingAtom.h \
-    ../Records/Text/KinsokuLeadingAtom.h \
+    ../Records/KinsokuAtom.h \
+    ../Records/KinsokuContainer.h \
+    ../Records/KinsokuFollowingAtom.h \
+    ../Records/KinsokuLeadingAtom.h \
     ../Records/MasterPersistAtom.h \
     ../Records/MasterTextPropAtom.h \
     ../Records/MetafileBlob.h \
@@ -503,7 +502,6 @@ HEADERS += \
     ../Records/NotesPersistAtom.h \
     ../Records/NoZoomViewInfoAtom.h \
     ../Records/OutlineTextRefAtom.h \
-    ../Records/Text/DocumentTextInfoContainer.h \
     ../Records/Text/OutlineTextProps9Container.h \
     ../Records/Text/OutlineTextPropsHeaderExAtom.h \
     ../Records/Text/PFMasks.h \
