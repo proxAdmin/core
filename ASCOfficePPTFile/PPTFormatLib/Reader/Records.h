@@ -168,7 +168,7 @@ public:
 	{
 	}
 
-    virtual~CUnknownRecord()
+	~CUnknownRecord()
 	{
 	}
     virtual void ReadFromStream(SRecordHeader & oHeader, const CFStreamPtr &pStream)

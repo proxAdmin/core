@@ -30,6 +30,7 @@
  *
  */
 #pragma once
+#include "../../Reader/Records.h"
 #include "PFMasks.h"
 
 

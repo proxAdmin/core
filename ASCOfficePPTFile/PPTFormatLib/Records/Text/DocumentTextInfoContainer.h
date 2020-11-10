@@ -32,7 +32,7 @@
 #pragma once
 
 #include "KinsokuContainer.h"
-#include "FontCollectionContainer.h"
+
 
 namespace PPT_FORMAT
 {
