@@ -519,8 +519,10 @@ void CPPTUserInfo::FromDocument()
 
 		if (0 != oSI.size())
 		{
-			if (oSI[0]->m_oSIRun.bLang)
-				m_wLanguage = oSI[0]->m_oSIRun.Lang;
+            if (oSI[0]->m_textSIException.m_lang)
+                m_wLanguage = oSI[0]->m_textSIException.m_lid.get();
+//            if (oSI[0]->m_oSIRun.bLang)
+//				m_wLanguage = oSI[0]->m_oSIRun.Lang;
 
 			m_oDefaultTextStyle.SetLanguage(m_wLanguage);
 		}

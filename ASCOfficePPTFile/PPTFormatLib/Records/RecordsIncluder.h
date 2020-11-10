@@ -118,7 +118,7 @@
 #include "TextHeaderAtom.h"
 #include "TextMasterStyleAtom.h"
 #include "TextPFExceptionAtom.h"
-#include "TextSIExceptionAtom.h"
+//#include "TextSIExceptionAtom.h"
 #include "VBAInfoAtom.h"
 #include "ViewInfoAtom.h"
 #include "ZoomViewInfoAtom.h"
