@@ -33,6 +33,7 @@
 #include "TextFullSettings.h"
 #include "SlidePersistAtom.h"
 #include "../Enums/RecordType.h"
+#include "Text/TextCharsAtom.h"
 
 
 class CRecordSlideListWithText : public CRecordsContainer

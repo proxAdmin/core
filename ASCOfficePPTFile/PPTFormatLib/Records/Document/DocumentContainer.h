@@ -30,20 +30,33 @@
  *
  */
 #pragma once
-#include "../Reader/Records.h"
+
+#include "DocumentAtom.h"
+#include "../Text/DocumentTextInfoContainer.h"
 
 namespace PPT_FORMAT
 {
-class CRecordOutlineTextRefAtom : public CUnknownRecord
+// TODO
+class CRecordDocumentContainer : public CUnknownRecord
 {
-    _INT32 m_index;
+public:
+    CRecordDocumentAtom                 m_documentAtom;
+    //                                  m_exObjList;
+    CRecordDocumentTextInfoContainer    m_documentTextInfo;
 
     virtual void ReadFromStream(SRecordHeader & oHeader, POLE::Stream* pStream)
     {
         m_oHeader = oHeader;
 
-        m_index = StreamUtils::ReadLONG(pStream);
-    }
+        LONG lPos(0); StreamUtils::StreamPosition(lPos,pStream);
 
+        SRecordHeader ReadHeader;
+        ReadHeader.ReadFromStream(pStream);
+        m_documentAtom.ReadFromStream(ReadHeader, pStream);
+
+        // TODO
+
+        StreamUtils::StreamSeek(lPos + m_oHeader.RecLen, pStream);
+    }
 };
 }

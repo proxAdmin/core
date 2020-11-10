@@ -33,7 +33,8 @@
 
 #include "PPTFileDefines.h"
 #include "../Enums/RecordType.h"
-#include "../Reader/ReadStructures.h"
+#include  "../../../Common/DocxFormat/Source/Base/Types_32.h"
+#include  "../../../Common/DocxFormat/Source/SystemUtility/File.h"
 #include "../../../ASCOfficePPTXFile/Editor/Drawing/Shapes/BaseShape/PPTShape/Enums.h"
 #include "../../../ASCOfficeXlsFile2/source/XlsFormat/Binary/CFStream.h"
 #include "../../../Common/3dParty/pole/pole.h"

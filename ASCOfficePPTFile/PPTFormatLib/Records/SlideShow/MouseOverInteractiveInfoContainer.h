@@ -30,19 +30,30 @@
  *
  */
 #pragma once
-#include "../Reader/Records.h"
+
+#include "InteractiveInfoAtom.h"
+#include "MacroNameAtom.h"
 
 namespace PPT_FORMAT
 {
-class CRecordOutlineTextRefAtom : public CUnknownRecord
+class CRecordMouseOverInteractiveInfoContainer : public CUnknownRecord
 {
-    _INT32 m_index;
+public:
+    CRecordInteractiveInfoAtom  m_interactiveInfoAtom;
+    CRecordMacroNameAtom        m_macroNameAtom;
+
 
     virtual void ReadFromStream(SRecordHeader & oHeader, POLE::Stream* pStream)
     {
         m_oHeader = oHeader;
 
-        m_index = StreamUtils::ReadLONG(pStream);
+        SRecordHeader ReadHeader;
+
+        ReadHeader.ReadFromStream(pStream);
+        m_interactiveInfoAtom.ReadFromStream(ReadHeader, pStream);
+
+        ReadHeader.ReadFromStream(pStream);
+        m_macroNameAtom.ReadFromStream(ReadHeader, pStream);
     }
 
 };

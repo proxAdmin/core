@@ -31,18 +31,19 @@
  */
 #pragma once
 #include "../Reader/Records.h"
+#include "../Enums/enums.h"
 
 namespace PPT_FORMAT
 {
-class CRecordOutlineTextRefAtom : public CUnknownRecord
+class CRecordTextHeaderAtom : public CUnknownRecord
 {
-    _INT32 m_index;
+    TextTypeEnum m_textType;
 
     virtual void ReadFromStream(SRecordHeader & oHeader, POLE::Stream* pStream)
     {
         m_oHeader = oHeader;
 
-        m_index = StreamUtils::ReadLONG(pStream);
+        m_textType = (TextTypeEnum)StreamUtils::ReadDWORD(pStream);
     }
 
 };

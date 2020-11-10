@@ -33,6 +33,7 @@
 
 #include "../Records/RecordsIncluder.h"
 #include "../Records/Animations/_includer.h"
+#include "../Records/TextSIExceptionAtom.h"
 
 #include <iostream>
 #include <iomanip>

@@ -30,20 +30,12 @@
  *
  */
 #pragma once
-#include "../Reader/Records.h"
+
+#include "../CString.h"
 
 namespace PPT_FORMAT
 {
-class CRecordOutlineTextRefAtom : public CUnknownRecord
+class CRecordMacroNameAtom : public CRecordCString
 {
-    _INT32 m_index;
-
-    virtual void ReadFromStream(SRecordHeader & oHeader, POLE::Stream* pStream)
-    {
-        m_oHeader = oHeader;
-
-        m_index = StreamUtils::ReadLONG(pStream);
-    }
-
 };
 }
