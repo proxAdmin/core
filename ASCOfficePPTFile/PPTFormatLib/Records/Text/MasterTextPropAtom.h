@@ -30,50 +30,48 @@
  *
  */
 #pragma once
-#include "PFMasks.h"
 
+#include "FontCollectionEntry.h"
+#include "../../Structures/IStruct.h"
 
 namespace PPT_FORMAT
 {
-
-struct STextAutoNumberScheme
+struct SMasterTextPropRun : public IStruct
 {
-    TextAutoNumberSchemeEnum    m_eScheme;
-    SHORT                       m_nStartNum;
+    _UINT32 m_count;
+    USHORT  m_indentLevel;
 
-
-    void ReadFromStream(POLE::Stream* pStream){
-        m_eScheme   = (TextAutoNumberSchemeEnum)StreamUtils::ReadSHORT(pStream);
-        m_nStartNum = StreamUtils::ReadSHORT(pStream);
+    virtual void ReadFromStream (POLE::Stream* pStream)
+    {
+        m_count         = StreamUtils::ReadDWORD(pStream);
+        m_indentLevel   = StreamUtils::ReadWORD(pStream);
     }
 };
 
-
-struct STextPFException9
+class CRecordMasterTextPropAtom : public CUnknownRecord
 {
-    PFMasks m_masks;
-
-    nullable<SHORT>                 m_optBulletBlipRef;
-    nullable_bool                   m_optfBulletHasAutoNumber;
-    nullable<STextAutoNumberScheme> m_optBulletAutoNumberScheme;
+public:
+    std::vector<SMasterTextPropRun> m_rgMasterTextPropRun;
 
 
-    void ReadFromStream(POLE::Stream* pStream){
-        m_masks.ReadFromStream(pStream);
+    virtual void ReadFromStream(SRecordHeader &oHeader, POLE::Stream *pStream)
+    {
+        m_oHeader			=	oHeader;
+        LONG lPos			=	0;
+        StreamUtils::StreamPosition ( lPos, pStream );
 
-        if (m_masks.m_bulletBlip)
-            m_optBulletBlipRef = StreamUtils::ReadSHORT(pStream);
+        LONG lCurPos		=	0;
+        StreamUtils::StreamPosition ( lCurPos, pStream );
 
-        if (m_masks.m_bulletHasScheme)
-            m_optfBulletHasAutoNumber = (bool)StreamUtils::ReadSHORT(pStream);
-
-        if(m_masks.m_bulletScheme)
+        while ( lPos + m_oHeader.RecLen > lCurPos)
         {
-            auto pBulletAutoNumberScheme = new STextAutoNumberScheme;
-            pBulletAutoNumberScheme->ReadFromStream(pStream);
-            m_optBulletAutoNumberScheme = pBulletAutoNumberScheme;
-        }
+            SMasterTextPropRun style;
+            style.ReadFromStream(pStream);
+            m_rgMasterTextPropRun.push_back(style);
 
+            StreamUtils::StreamPosition ( lCurPos, pStream );
+        }
+        StreamUtils::StreamSeek(lPos + m_oHeader.RecLen, pStream);
     }
 };
 }

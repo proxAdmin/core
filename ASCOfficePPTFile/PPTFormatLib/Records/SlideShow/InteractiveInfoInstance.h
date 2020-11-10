@@ -30,50 +30,28 @@
  *
  */
 #pragma once
-#include "PFMasks.h"
 
+#include "MouseClickInteractiveInfoContainer.h"
+#include "MouseOverInteractiveInfoContainer.h"
 
 namespace PPT_FORMAT
 {
-
-struct STextAutoNumberScheme
+IRecord* InteractiveInfoInstanceFactory(SRecordHeader & oHeader)
 {
-    TextAutoNumberSchemeEnum    m_eScheme;
-    SHORT                       m_nStartNum;
-
-
-    void ReadFromStream(POLE::Stream* pStream){
-        m_eScheme   = (TextAutoNumberSchemeEnum)StreamUtils::ReadSHORT(pStream);
-        m_nStartNum = StreamUtils::ReadSHORT(pStream);
-    }
-};
-
-
-struct STextPFException9
-{
-    PFMasks m_masks;
-
-    nullable<SHORT>                 m_optBulletBlipRef;
-    nullable_bool                   m_optfBulletHasAutoNumber;
-    nullable<STextAutoNumberScheme> m_optBulletAutoNumberScheme;
-
-
-    void ReadFromStream(POLE::Stream* pStream){
-        m_masks.ReadFromStream(pStream);
-
-        if (m_masks.m_bulletBlip)
-            m_optBulletBlipRef = StreamUtils::ReadSHORT(pStream);
-
-        if (m_masks.m_bulletHasScheme)
-            m_optfBulletHasAutoNumber = (bool)StreamUtils::ReadSHORT(pStream);
-
-        if(m_masks.m_bulletScheme)
+        switch (oHeader.RecInstance)
         {
-            auto pBulletAutoNumberScheme = new STextAutoNumberScheme;
-            pBulletAutoNumberScheme->ReadFromStream(pStream);
-            m_optBulletAutoNumberScheme = pBulletAutoNumberScheme;
+        case 0:
+        {
+            return new CRecordMouseClickInteractiveInfoContainer;
+            break;
         }
-
+        case 1:
+        {
+            return new CRecordMouseOverInteractiveInfoContainer;
+            break;
+        }
+        default:
+            return new CUnknownRecord;
+        }
     }
-};
 }

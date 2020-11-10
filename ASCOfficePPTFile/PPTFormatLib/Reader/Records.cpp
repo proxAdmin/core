@@ -33,7 +33,7 @@
 
 #include "../Records/RecordsIncluder.h"
 #include "../Records/Animations/_includer.h"
-
+//#include "../Records/Text/DocumentTextInfoContainer.h"
 #include <iostream>
 #include <iomanip>
 
@@ -558,7 +558,7 @@ IRecord* CreateByType(SRecordHeader oHeader)
 
     CREATE_BY_TYPE(RT_TextCharFormatExceptionAtom			, CRecordTextCFExceptionAtom)
     CREATE_BY_TYPE(RT_TextParagraphFormatExceptionAtom		, CRecordTextPFExceptionAtom)
-    CREATE_BY_TYPE(RT_TextSpecialInfoDefaultAtom			, CRecordTextSIExceptionAtom)
+//    CREATE_BY_TYPE(RT_TextSpecialInfoDefaultAtom			, CRecordTextSIExceptionAtom)
 
     CREATE_BY_TYPE(RT_TextRulerAtom         				, CRecordTextRulerAtom)
             //CREATE_BY_TYPE(RECORD_TYPE_TEXTBOOKMARK_ATOM			, CRecordTextBookmarkAtom)

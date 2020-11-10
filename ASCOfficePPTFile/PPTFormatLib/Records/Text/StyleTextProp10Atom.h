@@ -30,50 +30,35 @@
  *
  */
 #pragma once
-#include "PFMasks.h"
+
+#include "../Reader/Records.h"
+#include "TextCFException10.h"
 
 
 namespace PPT_FORMAT
 {
-
-struct STextAutoNumberScheme
+class CRecordStyleTextProp10Atom : public CUnknownRecord
 {
-    TextAutoNumberSchemeEnum    m_eScheme;
-    SHORT                       m_nStartNum;
+    std::vector<STextCFException10> rgStyleTextProp10;
 
+    virtual void ReadFromStream(SRecordHeader &oHeader, POLE::Stream *pStream)
+    {
+        m_oHeader			=	oHeader;
+        LONG lPos			=	0;
+        StreamUtils::StreamPosition ( lPos, pStream );
 
-    void ReadFromStream(POLE::Stream* pStream){
-        m_eScheme   = (TextAutoNumberSchemeEnum)StreamUtils::ReadSHORT(pStream);
-        m_nStartNum = StreamUtils::ReadSHORT(pStream);
-    }
-};
+        LONG lCurPos		=	0;
+        StreamUtils::StreamPosition ( lCurPos, pStream );
 
-
-struct STextPFException9
-{
-    PFMasks m_masks;
-
-    nullable<SHORT>                 m_optBulletBlipRef;
-    nullable_bool                   m_optfBulletHasAutoNumber;
-    nullable<STextAutoNumberScheme> m_optBulletAutoNumberScheme;
-
-
-    void ReadFromStream(POLE::Stream* pStream){
-        m_masks.ReadFromStream(pStream);
-
-        if (m_masks.m_bulletBlip)
-            m_optBulletBlipRef = StreamUtils::ReadSHORT(pStream);
-
-        if (m_masks.m_bulletHasScheme)
-            m_optfBulletHasAutoNumber = (bool)StreamUtils::ReadSHORT(pStream);
-
-        if(m_masks.m_bulletScheme)
+        while ( lPos + m_oHeader.RecLen > lCurPos)
         {
-            auto pBulletAutoNumberScheme = new STextAutoNumberScheme;
-            pBulletAutoNumberScheme->ReadFromStream(pStream);
-            m_optBulletAutoNumberScheme = pBulletAutoNumberScheme;
-        }
+            STextCFException10 style;
+            style.ReadFromStream(pStream);
+            rgStyleTextProp10.push_back(style);
 
+            StreamUtils::StreamPosition ( lCurPos, pStream );
+        }
+        StreamUtils::StreamSeek(lPos + m_oHeader.RecLen, pStream);
     }
 };
 }

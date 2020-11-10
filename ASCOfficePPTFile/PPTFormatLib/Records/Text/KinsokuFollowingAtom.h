@@ -30,50 +30,25 @@
  *
  */
 #pragma once
-#include "PFMasks.h"
+#include "../Reader/Records.h"
 
-
-namespace PPT_FORMAT
+class CRecordKinsokuFollowingAtom : public CUnknownRecord
 {
+public:
+    std::wstring m_arKinsokuFollowing;
 
-struct STextAutoNumberScheme
-{
-    TextAutoNumberSchemeEnum    m_eScheme;
-    SHORT                       m_nStartNum;
+    CRecordKinsokuFollowingAtom()
+    {
+    }
 
+    ~CRecordKinsokuFollowingAtom()
+    {
+    }
 
-    void ReadFromStream(POLE::Stream* pStream){
-        m_eScheme   = (TextAutoNumberSchemeEnum)StreamUtils::ReadSHORT(pStream);
-        m_nStartNum = StreamUtils::ReadSHORT(pStream);
+    virtual void ReadFromStream(SRecordHeader & oHeader, POLE::Stream* pStream)
+    {
+        m_oHeader = oHeader;
+
+        m_arKinsokuFollowing = StreamUtils::ReadStringW(pStream, m_oHeader.RecLen - sizeof (oHeader));
     }
 };
-
-
-struct STextPFException9
-{
-    PFMasks m_masks;
-
-    nullable<SHORT>                 m_optBulletBlipRef;
-    nullable_bool                   m_optfBulletHasAutoNumber;
-    nullable<STextAutoNumberScheme> m_optBulletAutoNumberScheme;
-
-
-    void ReadFromStream(POLE::Stream* pStream){
-        m_masks.ReadFromStream(pStream);
-
-        if (m_masks.m_bulletBlip)
-            m_optBulletBlipRef = StreamUtils::ReadSHORT(pStream);
-
-        if (m_masks.m_bulletHasScheme)
-            m_optfBulletHasAutoNumber = (bool)StreamUtils::ReadSHORT(pStream);
-
-        if(m_masks.m_bulletScheme)
-        {
-            auto pBulletAutoNumberScheme = new STextAutoNumberScheme;
-            pBulletAutoNumberScheme->ReadFromStream(pStream);
-            m_optBulletAutoNumberScheme = pBulletAutoNumberScheme;
-        }
-
-    }
-};
-}

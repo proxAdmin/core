@@ -30,50 +30,50 @@
  *
  */
 #pragma once
-#include "PFMasks.h"
-
+#include "TextSIException.h"
 
 namespace PPT_FORMAT
 {
-
-struct STextAutoNumberScheme
+struct STextSIRun : public IStruct
 {
-    TextAutoNumberSchemeEnum    m_eScheme;
-    SHORT                       m_nStartNum;
+    _UINT32             m_count;
+    STextSIException    m_si;
 
-
-    void ReadFromStream(POLE::Stream* pStream){
-        m_eScheme   = (TextAutoNumberSchemeEnum)StreamUtils::ReadSHORT(pStream);
-        m_nStartNum = StreamUtils::ReadSHORT(pStream);
+    void ReadFromStream(POLE::Stream* pStream)
+    {
+        m_count = StreamUtils::ReadDWORD(pStream);
+        m_si.ReadFromStream(pStream);
     }
 };
 
 
-struct STextPFException9
+class CRecordTextSpecialInfoAtom : public CUnknownRecord
 {
-    PFMasks m_masks;
+public:
+    std::vector<STextSIRun> m_rgSIRun;
 
-    nullable<SHORT>                 m_optBulletBlipRef;
-    nullable_bool                   m_optfBulletHasAutoNumber;
-    nullable<STextAutoNumberScheme> m_optBulletAutoNumberScheme;
+    virtual void ReadFromStream(SRecordHeader &oHeader, POLE::Stream *pStream)
+    {
+        m_oHeader			=	oHeader;
+        LONG lPos			=	0;
+        StreamUtils::StreamPosition ( lPos, pStream );
 
+        UINT lCurLen		=	0;
 
-    void ReadFromStream(POLE::Stream* pStream){
-        m_masks.ReadFromStream(pStream);
+        SRecordHeader ReadHeader;
 
-        if (m_masks.m_bulletBlip)
-            m_optBulletBlipRef = StreamUtils::ReadSHORT(pStream);
-
-        if (m_masks.m_bulletHasScheme)
-            m_optfBulletHasAutoNumber = (bool)StreamUtils::ReadSHORT(pStream);
-
-        if(m_masks.m_bulletScheme)
+        while ( lCurLen < m_oHeader.RecLen )
         {
-            auto pBulletAutoNumberScheme = new STextAutoNumberScheme;
-            pBulletAutoNumberScheme->ReadFromStream(pStream);
-            m_optBulletAutoNumberScheme = pBulletAutoNumberScheme;
-        }
+            if ( ReadHeader.ReadFromStream(pStream) == false)
+                break;
 
+            lCurLen += 8 + ReadHeader.RecLen;
+
+            STextSIRun textSIRun;
+            textSIRun.ReadFromStream(pStream);
+            m_rgSIRun.push_back(textSIRun);
+        }
+        StreamUtils::StreamSeek(lPos + m_oHeader.RecLen, pStream);
     }
 };
 }

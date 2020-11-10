@@ -30,59 +30,62 @@
  *
  */
 #pragma once
+#include "../Reader/Records.h"
+#include "KinsokuFollowingAtom.h"
+#include "KinsokuLeadingAtom.h"
 
-#include "TextPFException9.h"
-#include "TextCFException9.h"
-#include "TextSIException.h"
 
 namespace PPT_FORMAT
 {
-
-struct SStyleTextProp9
-{
-    STextPFException9 m_pf9;
-    STextCFException9 m_cf9;
-    STextSIException  m_si;
-
-
-    void ReadFromStream(POLE::Stream* pStream)
-    {
-        m_pf9.ReadFromStream(pStream);
-        m_cf9.ReadFromStream(pStream);
-         m_si.ReadFromStream(pStream);
-    }
-};
-
-
-class CRecordStyleTextProp9Atom : public CUnknownRecord
+class CRecordKinsoku9Atom : public CUnknownRecord
 {
 public:
-    virtual ~CRecordStyleTextProp9Atom()
-    {
-        for (auto pEl : m_rgStyleTextProp9)
-            RELEASEOBJECT(pEl)
-    }
-
-    virtual void ReadFromStream(SRecordHeader &oHeader, POLE::Stream *pStream)
+    BYTE m_korLevel;    // 2 bits
+    BYTE m_scLevel;     // 2 bits
+    BYTE m_tcLevel;     // 2 bits
+    BYTE m_jpnLevel;    // 2 bits
+    virtual void ReadFromStream(SRecordHeader & oHeader, POLE::Stream* pStream)
     {
         m_oHeader = oHeader;
 
-        LONG lCurLen = 0;
+        _UINT32 flags = StreamUtils::ReadDWORD(pStream);
+        m_korLevel = 0x03 & flags;
+        m_scLevel  = 0x0C & flags;
+        m_tcLevel  = 0x30 & flags;
+        m_jpnLevel = 0xC0 & flags;
+    }
+};
+
+class CRecordKinsoku9Container : public CUnknownRecord
+{
+public:
+    CRecordKinsoku9Atom                     m_kinsoku9Atom;
+    nullable<CRecordKinsokuLeadingAtom>     m_kinsokuLeadingAtom;
+    nullable<CRecordKinsokuFollowingAtom>   m_kinsokuFollowingAtom;
+
+    virtual void ReadFromStream(SRecordHeader & oHeader, POLE::Stream* pStream)
+    {
+        m_oHeader = oHeader;
+
         SRecordHeader ReadHeader;
+        ReadHeader.ReadFromStream(pStream);
+        m_kinsoku9Atom.ReadFromStream(ReadHeader, pStream);
 
-        while(lCurLen < m_oHeader.RecLen)
+        if (
+                m_kinsoku9Atom.m_korLevel == 2 ||
+                m_kinsoku9Atom.m_scLevel  == 2 ||
+                m_kinsoku9Atom.m_tcLevel  == 2 ||
+                m_kinsoku9Atom.m_jpnLevel == 2
+           )
         {
-            if (!ReadHeader.ReadFromStream(pStream))
-                break;
+            ReadHeader.ReadFromStream(pStream);
+            m_kinsokuLeadingAtom = new CRecordKinsokuLeadingAtom;
+            m_kinsokuLeadingAtom->ReadFromStream(ReadHeader, pStream);
 
-            lCurLen += 8 + ReadHeader.RecLen;
-            auto pRec = new SStyleTextProp9;
-            pRec->ReadFromStream(pStream);
-            m_rgStyleTextProp9.push_back(pRec);
+            ReadHeader.ReadFromStream(pStream);
+            m_kinsokuFollowingAtom = new CRecordKinsokuFollowingAtom;
+            m_kinsokuFollowingAtom->ReadFromStream(ReadHeader, pStream);
         }
     }
-
-public:
-    std::vector<SStyleTextProp9* > m_rgStyleTextProp9;
 };
 }

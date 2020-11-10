@@ -30,50 +30,31 @@
  *
  */
 #pragma once
-#include "PFMasks.h"
 
+#include "InteractiveInfoAtom.h"
+#include "MacroNameAtom.h"
 
 namespace PPT_FORMAT
 {
-
-struct STextAutoNumberScheme
+class CRecordMouseClickInteractiveInfoContainer : public CUnknownRecord
 {
-    TextAutoNumberSchemeEnum    m_eScheme;
-    SHORT                       m_nStartNum;
+public:
+    CRecordInteractiveInfoAtom  m_interactiveInfoAtom;
+    CRecordMacroNameAtom        m_macroNameAtom;
 
 
-    void ReadFromStream(POLE::Stream* pStream){
-        m_eScheme   = (TextAutoNumberSchemeEnum)StreamUtils::ReadSHORT(pStream);
-        m_nStartNum = StreamUtils::ReadSHORT(pStream);
+    virtual void ReadFromStream(SRecordHeader & oHeader, POLE::Stream* pStream)
+    {
+        m_oHeader = oHeader;
+
+        SRecordHeader ReadHeader;
+
+        ReadHeader.ReadFromStream(pStream);
+        m_interactiveInfoAtom.ReadFromStream(ReadHeader, pStream);
+
+        ReadHeader.ReadFromStream(pStream);
+        m_macroNameAtom.ReadFromStream(ReadHeader, pStream);
     }
-};
 
-
-struct STextPFException9
-{
-    PFMasks m_masks;
-
-    nullable<SHORT>                 m_optBulletBlipRef;
-    nullable_bool                   m_optfBulletHasAutoNumber;
-    nullable<STextAutoNumberScheme> m_optBulletAutoNumberScheme;
-
-
-    void ReadFromStream(POLE::Stream* pStream){
-        m_masks.ReadFromStream(pStream);
-
-        if (m_masks.m_bulletBlip)
-            m_optBulletBlipRef = StreamUtils::ReadSHORT(pStream);
-
-        if (m_masks.m_bulletHasScheme)
-            m_optfBulletHasAutoNumber = (bool)StreamUtils::ReadSHORT(pStream);
-
-        if(m_masks.m_bulletScheme)
-        {
-            auto pBulletAutoNumberScheme = new STextAutoNumberScheme;
-            pBulletAutoNumberScheme->ReadFromStream(pStream);
-            m_optBulletAutoNumberScheme = pBulletAutoNumberScheme;
-        }
-
-    }
 };
 }

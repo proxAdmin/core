@@ -30,50 +30,48 @@
  *
  */
 #pragma once
-#include "PFMasks.h"
+
+#include "FontCollectionEntry.h"
 
 
 namespace PPT_FORMAT
 {
-
-struct STextAutoNumberScheme
+class CRecordFontCollectionContainer : public CUnknownRecord
 {
-    TextAutoNumberSchemeEnum    m_eScheme;
-    SHORT                       m_nStartNum;
+public:
+    std::vector<CRecordFontCollectionEntry*> m_rgFontCollectionEntry;
 
-
-    void ReadFromStream(POLE::Stream* pStream){
-        m_eScheme   = (TextAutoNumberSchemeEnum)StreamUtils::ReadSHORT(pStream);
-        m_nStartNum = StreamUtils::ReadSHORT(pStream);
-    }
-};
-
-
-struct STextPFException9
-{
-    PFMasks m_masks;
-
-    nullable<SHORT>                 m_optBulletBlipRef;
-    nullable_bool                   m_optfBulletHasAutoNumber;
-    nullable<STextAutoNumberScheme> m_optBulletAutoNumberScheme;
-
-
-    void ReadFromStream(POLE::Stream* pStream){
-        m_masks.ReadFromStream(pStream);
-
-        if (m_masks.m_bulletBlip)
-            m_optBulletBlipRef = StreamUtils::ReadSHORT(pStream);
-
-        if (m_masks.m_bulletHasScheme)
-            m_optfBulletHasAutoNumber = (bool)StreamUtils::ReadSHORT(pStream);
-
-        if(m_masks.m_bulletScheme)
+public:
+    virtual ~CRecordFontCollectionContainer()
+    {
+        for (auto pEl : m_rgFontCollectionEntry)
         {
-            auto pBulletAutoNumberScheme = new STextAutoNumberScheme;
-            pBulletAutoNumberScheme->ReadFromStream(pStream);
-            m_optBulletAutoNumberScheme = pBulletAutoNumberScheme;
+            RELEASEOBJECT(pEl)
         }
+    }
 
+    virtual void ReadFromStream(SRecordHeader &oHeader, POLE::Stream *pStream)
+    {
+        m_oHeader			=	oHeader;
+        LONG lPos			=	0;
+        StreamUtils::StreamPosition ( lPos, pStream );
+
+        UINT lCurLen		=	0;
+
+        SRecordHeader ReadHeader;
+
+        while ( lCurLen < m_oHeader.RecLen )
+        {
+            if ( ReadHeader.ReadFromStream(pStream) == false)
+                break;
+
+            lCurLen += 8 + ReadHeader.RecLen;
+
+            auto pRec = new CRecordFontCollectionEntry;
+            pRec->ReadFromStream(ReadHeader, pStream);
+            m_rgFontCollectionEntry.push_back(pRec);
+        }
+        StreamUtils::StreamSeek(lPos + m_oHeader.RecLen, pStream);
     }
 };
 }

@@ -30,50 +30,35 @@
  *
  */
 #pragma once
-#include "PFMasks.h"
 
+#include "../../Reader/Records.h"
 
 namespace PPT_FORMAT
 {
 
-struct STextAutoNumberScheme
+class CRecordRTFDateTimeMCAtom : public CUnknownRecord
 {
-    TextAutoNumberSchemeEnum    m_eScheme;
-    SHORT                       m_nStartNum;
+    _INT32          m_positon;
+    std::wstring    m_format;
 
+    virtual void ReadFromStream(SRecordHeader & oHeader, POLE::Stream* pStream)
+    {
+        m_oHeader = oHeader;
 
-    void ReadFromStream(POLE::Stream* pStream){
-        m_eScheme   = (TextAutoNumberSchemeEnum)StreamUtils::ReadSHORT(pStream);
-        m_nStartNum = StreamUtils::ReadSHORT(pStream);
-    }
-};
+        m_positon = StreamUtils::ReadLONG(pStream);
 
-
-struct STextPFException9
-{
-    PFMasks m_masks;
-
-    nullable<SHORT>                 m_optBulletBlipRef;
-    nullable_bool                   m_optfBulletHasAutoNumber;
-    nullable<STextAutoNumberScheme> m_optBulletAutoNumberScheme;
-
-
-    void ReadFromStream(POLE::Stream* pStream){
-        m_masks.ReadFromStream(pStream);
-
-        if (m_masks.m_bulletBlip)
-            m_optBulletBlipRef = StreamUtils::ReadSHORT(pStream);
-
-        if (m_masks.m_bulletHasScheme)
-            m_optfBulletHasAutoNumber = (bool)StreamUtils::ReadSHORT(pStream);
-
-        if(m_masks.m_bulletScheme)
+        m_format.clear();
+        LONG lPos(0); StreamUtils::StreamPosition(lPos, pStream);
+        for (int i = 0; i < 64; i++)
         {
-            auto pBulletAutoNumberScheme = new STextAutoNumberScheme;
-            pBulletAutoNumberScheme->ReadFromStream(pStream);
-            m_optBulletAutoNumberScheme = pBulletAutoNumberScheme;
-        }
+            WCHAR symbol = StreamUtils::ReadWORD(pStream);
+            if (symbol == L'\0')
+                break;
 
+            m_format.push_back(symbol);
+        }
+        StreamUtils::StreamSeek(lPos + 128, pStream);
     }
 };
+
 }

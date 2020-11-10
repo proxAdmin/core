@@ -460,6 +460,12 @@ HEADERS += \
     ../Records/BuildAtom.h \
     ../Records/DocInfoListContainer.h \
     ../Records/DocProgTagsContainer.h \
+    ../Records/SlideShow/InteractiveInfoAtom.h \
+    ../Records/SlideShow/InteractiveInfoInstance.h \
+    ../Records/SlideShow/MacroNameAtom.h \
+    ../Records/SlideShow/MouseClickInteractiveInfoContainer.h \
+    ../Records/SlideShow/MouseOverInteractiveInfoContainer.h \
+    ../Records/SlideShow/SSDocInfoAtom.h \
     ../Records/Text/CFMasks.h \
     ../Records/ColorSchemeAtom.h \
     ../Records/CString.h \
@@ -502,8 +508,28 @@ HEADERS += \
     ../Records/NotesPersistAtom.h \
     ../Records/NoZoomViewInfoAtom.h \
     ../Records/OutlineTextRefAtom.h \
+    ../Records/Text/DateTimeMCAtom.h \
+    ../Records/Text/DefaultRulerAtom.h \
+    ../Records/Text/DocumentTextInfoContainer.h \
+    ../Records/Text/FontCollection10Container.h \
+    ../Records/Text/FontCollectionContainer.h \
+    ../Records/Text/FontCollectionEntry.h \
+    ../Records/Text/FontEmbedFlags10Atom.h \
+    ../Records/Text/FooterMCAtom.h \
+    ../Records/Text/GenericDateMCAtom.h \
+    ../Records/Text/HeaderMCAtom.h \
+    ../Records/Text/Kinsoku9Container.h \
+    ../Records/Text/KinsokuAtom.h \
+    ../Records/Text/KinsokuContainer.h \
+    ../Records/Text/KinsokuFollowingAtom.h \
+    ../Records/Text/KinsokuLeadingAtom.h \
+    ../Records/Text/MasterTextPropAtom.h \
+    ../Records/Text/MouseClickTextInteractiveInfoAtom.h \
+    ../Records/Text/MouseOverTextInteractiveInfoAtom.h \
+    ../Records/Text/OfficeArtClientTextbox.h \
     ../Records/Text/OutlineTextProps9Container.h \
     ../Records/Text/OutlineTextPropsHeaderExAtom.h \
+    ../Records/Text/OutlineTextRefAtom.h \
     ../Records/Text/PFMasks.h \
     ../Records/PersistDirectoryAtom.h \
     ../Records/PlaceHolderAtom.h \
@@ -537,12 +563,31 @@ HEADERS += \
     ../Records/SSlideLayoutAtom.h \
     ../Records/SSSlideInfoAtom.h \
     ../Records/StyleTextPropAtom.h \
+    ../Records/Text/RTFDateTimeMCAtom.h \
+    ../Records/Text/SlideNumberMCAtom.h \
+    ../Records/Text/StyleTextProp10Atom.h \
+    ../Records/Text/StyleTextProp11Atom.h \
     ../Records/Text/StyleTextProp9Atom.h \
+    ../Records/Text/StyleTextPropAtom.h \
+    ../Records/Text/TabStops.h \
+    ../Records/Text/TextBookmarkAtom.h \
+    ../Records/Text/TextBytesAtom.h \
+    ../Records/Text/TextCFException.h \
+    ../Records/Text/TextCFException10.h \
     ../Records/Text/TextCFException9.h \
+    ../Records/Text/TextCharsAtom.h \
     ../Records/Text/TextDefaults9Atom.h \
+    ../Records/Text/TextHeaderAtom.h \
+    ../Records/Text/TextInteractiveInfoInstance.h \
     ../Records/Text/TextMasterStyle9Atom.h \
     ../Records/Text/TextMasterStyle9Level.h \
+    ../Records/Text/TextMasterStyleAtom.h \
+    ../Records/Text/TextPFException.h \
+    ../Records/Text/TextRange.h \
+    ../Records/Text/TextRuler.h \
+    ../Records/Text/TextRulerAtom.h \
     ../Records/Text/TextSIException.h \
+    ../Records/Text/TextSpecialInfoAtom.h \
     ../Records/TextBookmarkAtom.h \
     ../Records/TextBytesAtom.h \
     ../Records/TextCFExceptionAtom.h \

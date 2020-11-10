@@ -30,50 +30,38 @@
  *
  */
 #pragma once
-#include "PFMasks.h"
 
+#include "../../Structures/IStruct.h"
+#include "../../Enums/enums.h"
 
 namespace PPT_FORMAT
 {
-
-struct STextAutoNumberScheme
+struct STabStop : public IStruct
 {
-    TextAutoNumberSchemeEnum    m_eScheme;
-    SHORT                       m_nStartNum;
+    SHORT               m_position;
+    TextTabTypeEnum     m_type;
 
-
-    void ReadFromStream(POLE::Stream* pStream){
-        m_eScheme   = (TextAutoNumberSchemeEnum)StreamUtils::ReadSHORT(pStream);
-        m_nStartNum = StreamUtils::ReadSHORT(pStream);
+    virtual void ReadFromStream (POLE::Stream* pStream)
+    {
+        m_position  = StreamUtils::ReadSHORT(pStream);
+        m_type      = (TextTabTypeEnum)StreamUtils::ReadSHORT(pStream);
     }
 };
 
-
-struct STextPFException9
+struct STabStops : public IStruct
 {
-    PFMasks m_masks;
+    USHORT m_count;
+    std::vector<STabStop> m_rgTabStop;
 
-    nullable<SHORT>                 m_optBulletBlipRef;
-    nullable_bool                   m_optfBulletHasAutoNumber;
-    nullable<STextAutoNumberScheme> m_optBulletAutoNumberScheme;
-
-
-    void ReadFromStream(POLE::Stream* pStream){
-        m_masks.ReadFromStream(pStream);
-
-        if (m_masks.m_bulletBlip)
-            m_optBulletBlipRef = StreamUtils::ReadSHORT(pStream);
-
-        if (m_masks.m_bulletHasScheme)
-            m_optfBulletHasAutoNumber = (bool)StreamUtils::ReadSHORT(pStream);
-
-        if(m_masks.m_bulletScheme)
+    virtual void ReadFromStream (POLE::Stream* pStream)
+    {
+        m_count  = StreamUtils::ReadSHORT(pStream);
+        for (unsigned i = 0; i < m_count; i++)
         {
-            auto pBulletAutoNumberScheme = new STextAutoNumberScheme;
-            pBulletAutoNumberScheme->ReadFromStream(pStream);
-            m_optBulletAutoNumberScheme = pBulletAutoNumberScheme;
+            STabStop tabStop;
+            tabStop.ReadFromStream(pStream);
+            m_rgTabStop.push_back(tabStop);
         }
-
     }
 };
 }
