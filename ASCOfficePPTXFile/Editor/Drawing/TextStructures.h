@@ -464,88 +464,88 @@ namespace PPT_FORMAT
 
 	};
 
-//	class CTextRuler
-//	{
-//	public:
-//		NSCommon::nullable_base<LONG>	DefaultTabSize;
-//		NSCommon::nullable_base<SHORT>	CLevels;
+	class CTextRuler
+	{
+	public:
+		NSCommon::nullable_base<LONG>	DefaultTabSize;
+		NSCommon::nullable_base<SHORT>	CLevels;
 	
-//		NSCommon::nullable_base<SHORT>	TabStops;
-//		std::vector<std::pair<int,int>>	tabsStops;
+		NSCommon::nullable_base<SHORT>	TabStops;
+		std::vector<std::pair<int,int>>	tabsStops;
 
-//		NSCommon::nullable_base<LONG>	LeftMargin1;
-//		NSCommon::nullable_base<LONG>	LeftMargin2;
-//		NSCommon::nullable_base<LONG>	LeftMargin3;
-//		NSCommon::nullable_base<LONG>	LeftMargin4;
-//		NSCommon::nullable_base<LONG>	LeftMargin5;
+		NSCommon::nullable_base<LONG>	LeftMargin1;
+		NSCommon::nullable_base<LONG>	LeftMargin2;
+		NSCommon::nullable_base<LONG>	LeftMargin3;
+		NSCommon::nullable_base<LONG>	LeftMargin4;
+		NSCommon::nullable_base<LONG>	LeftMargin5;
 
-//		NSCommon::nullable_base<LONG>	Indent1;
-//		NSCommon::nullable_base<LONG>	Indent2;
-//		NSCommon::nullable_base<LONG>	Indent3;
-//		NSCommon::nullable_base<LONG>	Indent4;
-//		NSCommon::nullable_base<LONG>	Indent5;
+		NSCommon::nullable_base<LONG>	Indent1;
+		NSCommon::nullable_base<LONG>	Indent2;
+		NSCommon::nullable_base<LONG>	Indent3;
+		NSCommon::nullable_base<LONG>	Indent4;
+		NSCommon::nullable_base<LONG>	Indent5;
 
-//		CTextRuler()
-//		{
-//		}
+		CTextRuler() 
+		{
+		}
 
-//		CTextRuler(const CTextRuler& oSrc)
-//		{
-//			*this = oSrc;
-//		}
+		CTextRuler(const CTextRuler& oSrc)
+		{
+			*this = oSrc;
+		}
 
-//		CTextRuler& operator =(const CTextRuler& oSrc)
-//		{
-//			DefaultTabSize	= oSrc.DefaultTabSize;
-//			CLevels			= oSrc.CLevels;
-//			TabStops		= oSrc.TabStops;
+		CTextRuler& operator =(const CTextRuler& oSrc)
+		{
+			DefaultTabSize	= oSrc.DefaultTabSize;
+			CLevels			= oSrc.CLevels;
+			TabStops		= oSrc.TabStops;
 
-//			LeftMargin1 = oSrc.LeftMargin1;
-//			LeftMargin2 = oSrc.LeftMargin2;
-//			LeftMargin3 = oSrc.LeftMargin3;
-//			LeftMargin4 = oSrc.LeftMargin4;
-//			LeftMargin5 = oSrc.LeftMargin5;
+			LeftMargin1 = oSrc.LeftMargin1;
+			LeftMargin2 = oSrc.LeftMargin2;
+			LeftMargin3 = oSrc.LeftMargin3;
+			LeftMargin4 = oSrc.LeftMargin4;
+			LeftMargin5 = oSrc.LeftMargin5;
 
-//			Indent1 = oSrc.Indent1;
-//			Indent2 = oSrc.Indent2;
-//			Indent3 = oSrc.Indent3;
-//			Indent4 = oSrc.Indent4;
-//			Indent5 = oSrc.Indent5;
+			Indent1 = oSrc.Indent1;
+			Indent2 = oSrc.Indent2;
+			Indent3 = oSrc.Indent3;
+			Indent4 = oSrc.Indent4;
+			Indent5 = oSrc.Indent5;
 
-//			tabsStops = oSrc.tabsStops;
+			tabsStops = oSrc.tabsStops;
 
-//			return *this;
-//		}
-//		~CTextRuler()
-//		{
-//			tabsStops.clear();
-//		}
+			return *this;
+		}
+		~CTextRuler()
+		{
+			tabsStops.clear();
+		}
 
-//		void ApplyBefore(const CTextRuler& oSrc)
-//		{
-//			if (!DefaultTabSize.is_init())			DefaultTabSize = oSrc.DefaultTabSize;
-//			if (!CLevels.is_init())					CLevels		= oSrc.CLevels;
+		void ApplyBefore(const CTextRuler& oSrc)
+		{
+			if (!DefaultTabSize.is_init())			DefaultTabSize = oSrc.DefaultTabSize;
+			if (!CLevels.is_init())					CLevels		= oSrc.CLevels;
 			
-//			if (!LeftMargin1.is_init())				LeftMargin1 = oSrc.LeftMargin1;
-//			if (!LeftMargin2.is_init())				LeftMargin2 = oSrc.LeftMargin2;
-//			if (!LeftMargin3.is_init())				LeftMargin3 = oSrc.LeftMargin3;
-//			if (!LeftMargin4.is_init())				LeftMargin4 = oSrc.LeftMargin4;
-//			if (!LeftMargin5.is_init())				LeftMargin5 = oSrc.LeftMargin5;
+			if (!LeftMargin1.is_init())				LeftMargin1 = oSrc.LeftMargin1;
+			if (!LeftMargin2.is_init())				LeftMargin2 = oSrc.LeftMargin2;
+			if (!LeftMargin3.is_init())				LeftMargin3 = oSrc.LeftMargin3;
+			if (!LeftMargin4.is_init())				LeftMargin4 = oSrc.LeftMargin4;
+			if (!LeftMargin5.is_init())				LeftMargin5 = oSrc.LeftMargin5;
 
-//			if (!Indent1.is_init())					Indent1 = oSrc.Indent1;
-//			if (!Indent2.is_init())					Indent2 = oSrc.Indent2;
-//			if (!Indent3.is_init())					Indent3 = oSrc.Indent3;
-//			if (!Indent4.is_init())					Indent4 = oSrc.Indent4;
-//			if (!Indent5.is_init())					Indent5 = oSrc.Indent5;
+			if (!Indent1.is_init())					Indent1 = oSrc.Indent1;
+			if (!Indent2.is_init())					Indent2 = oSrc.Indent2;
+			if (!Indent3.is_init())					Indent3 = oSrc.Indent3;
+			if (!Indent4.is_init())					Indent4 = oSrc.Indent4;
+			if (!Indent5.is_init())					Indent5 = oSrc.Indent5;
 
-//			if (!tabsStops.empty())					tabsStops = oSrc.tabsStops;
-//		}
+			if (!tabsStops.empty())					tabsStops = oSrc.tabsStops;
+		}
 
-//        std::wstring ToString()
-//		{
-//			return L"";
-//		}
-//	};
+        std::wstring ToString()
+		{
+			return L"";
+		}
+	};
 
 	class CTextSIRun
 	{

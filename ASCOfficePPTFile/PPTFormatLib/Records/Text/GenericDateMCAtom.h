@@ -38,7 +38,6 @@ namespace PPT_FORMAT
 
 class CRecordGenericDateMCAtom : public CUnknownRecord
 {
-public:
     _INT32 m_positon;
 
     virtual void ReadFromStream(SRecordHeader & oHeader, POLE::Stream* pStream)

@@ -31,7 +31,6 @@
  */
 #pragma once
 #include "../../Reader/Records.h"
-#include "../../Structures/IStruct.h"
 
 namespace PPT_FORMAT
 {
@@ -110,20 +109,6 @@ struct STextSIException
             m_smartTags = new SSmartTags;
             m_smartTags->ReadFromStream(pStream);
         }
-    }
-};
-
-
-class CRecordTextSIExceptionAtom : public CUnknownRecord
-{
-public:
-    STextSIException m_textSIException;
-
-    virtual void ReadFromStream(SRecordHeader & oHeader, POLE::Stream* pStream)
-    {
-        m_oHeader = oHeader;
-
-        m_textSIException.ReadFromStream(pStream);
     }
 };
 }

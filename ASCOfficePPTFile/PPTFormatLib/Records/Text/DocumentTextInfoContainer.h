@@ -33,93 +33,12 @@
 
 #include "KinsokuContainer.h"
 #include "FontCollectionContainer.h"
-#include "TextCFException.h"
-#include "TextPFException.h"
-#include "DefaultRulerAtom.h"
-#include "TextSIException.h"
-#include "TextMasterStyleAtom.h"
 
 namespace PPT_FORMAT
 {
 class CRecordDocumentTextInfoContainer : public CUnknownRecord
 {
 public:
-    nullable<CRecordKinsokuContainer> m_kinsoku;
-    nullable<CRecordFontCollectionContainer> m_fontCollection;
-    nullable<CRecordTextCFExceptionAtom> m_textCFDefaultsAtom;
-    nullable<CRecordTextPFExceptionAtom> m_textPFDefaultsAtom;
-    nullable<CRecordDefaultRulerAtom> m_defaultRulerAtom;
-    nullable<CRecordTextSIExceptionAtom> m_textSIDefaultsAtom;
-    nullable<CRecordTextMasterStyleAtom> m_textMasterStyleAtom;
 
-
-    virtual void ReadFromStream(SRecordHeader &oHeader, POLE::Stream *pStream)
-    {
-        m_oHeader			=	oHeader;
-        LONG lPos			=	0;
-        StreamUtils::StreamPosition ( lPos, pStream );
-
-        UINT lCurLen		=	0;
-
-        SRecordHeader ReadHeader;
-
-        while ( lCurLen < m_oHeader.RecLen )
-        {
-            if ( ReadHeader.ReadFromStream(pStream) == false)
-                break;
-
-            lCurLen += 8 + ReadHeader.RecLen;
-
-            switch (m_oHeader.RecType)
-            {
-            case RT_Kinsoku:
-            {
-                m_kinsoku = new CRecordKinsokuContainer;
-                m_kinsoku->ReadFromStream(ReadHeader, pStream);
-                break;
-            }
-            case RT_FontCollection:
-            {
-                m_fontCollection = new CRecordFontCollectionContainer;
-                m_fontCollection->ReadFromStream(ReadHeader, pStream);
-                break;
-            }
-            case RT_TextCharFormatExceptionAtom:
-            {
-                m_textCFDefaultsAtom = new CRecordTextCFExceptionAtom;
-                m_textCFDefaultsAtom->ReadFromStream(ReadHeader, pStream);
-                break;
-            }
-            case RT_TextParagraphFormatExceptionAtom:
-            {
-                m_textPFDefaultsAtom = new CRecordTextPFExceptionAtom;
-                m_textPFDefaultsAtom->ReadFromStream(ReadHeader, pStream);
-                break;
-            }
-            case RT_DefaultRulerAtom:
-            {
-                m_defaultRulerAtom = new CRecordDefaultRulerAtom;
-                m_defaultRulerAtom->ReadFromStream(ReadHeader, pStream);
-                break;
-            }
-            case RT_TextSpecialInfoDefaultAtom:
-            {
-                m_textSIDefaultsAtom = new CRecordTextSIExceptionAtom;
-                m_textSIDefaultsAtom->ReadFromStream(ReadHeader, pStream);
-                break;
-            }
-            case RT_TextMasterStyleAtom:
-            {
-                m_textMasterStyleAtom = new CRecordTextMasterStyleAtom;
-                m_textMasterStyleAtom->ReadFromStream(ReadHeader, pStream);
-                break;
-            }
-            default:
-                StreamUtils::StreamSkip(ReadHeader.RecLen, pStream);
-                break;
-            }
-        }
-        StreamUtils::StreamSeek(lPos + m_oHeader.RecLen, pStream);
-    }
 };
 }

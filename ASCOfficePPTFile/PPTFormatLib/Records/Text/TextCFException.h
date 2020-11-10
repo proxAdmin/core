@@ -113,17 +113,4 @@ struct STextCFException : public IStruct
             m_position = new SHORT(StreamUtils::ReadSHORT(pStream));
     }
 };
-
-class CRecordTextCFExceptionAtom : public CUnknownRecord
-{
-public:
-    STextCFException m_cf;
-
-    virtual void ReadFromStream(SRecordHeader & oHeader, POLE::Stream* pStream)
-    {
-        m_oHeader = oHeader;
-
-        m_cf.ReadFromStream(pStream);
-    }
-};
 }

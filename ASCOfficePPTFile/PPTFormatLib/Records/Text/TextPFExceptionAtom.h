@@ -30,24 +30,8 @@
  *
  */
 #pragma once
-#include "../Reader/Records.h"
-#include "TextRuler.h"
+#include "TextPFException.h"
 
 
 namespace PPT_FORMAT
 {
-class CRecordDefaultRulerAtom : public CUnknownRecord
-{
-public:
-    STextRuler m_defaultTextRuler;
-
-
-    virtual void ReadFromStream(SRecordHeader & oHeader, POLE::Stream* pStream)
-    {
-        m_oHeader = oHeader;
-
-        m_defaultTextRuler.ReadFromStream(pStream);
-    }
-
-};
-}

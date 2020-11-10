@@ -32,31 +32,25 @@
 #pragma once
 #include "../Reader/Records.h"
 
-class CRecordTextRulerAtom : public CUnknownRecord
+class CRecordTextCharsAtom : public CUnknownRecord
 {
 public:
-	PPT_FORMAT::CTextRuler m_oTextRuler;
+	std::wstring m_strText;
 
 public:
 	
-	CRecordTextRulerAtom()
+	CRecordTextCharsAtom()
 	{
 	}
 
-	~CRecordTextRulerAtom()
+	~CRecordTextCharsAtom()
 	{
 	}
 
 	virtual void ReadFromStream(SRecordHeader & oHeader, POLE::Stream* pStream)
 	{
 		m_oHeader = oHeader;
-		LONG lOffset = 0;
-		StreamUtils::StreamPosition(lOffset, pStream);
-
-		NSStreamReader::Read(pStream, m_oTextRuler);
-
-		// на всякий случай...
-		StreamUtils::StreamSeek(lOffset + m_oHeader.RecLen, pStream);
+		m_strText = StreamUtils::ReadStringW(pStream, m_oHeader.RecLen / 2);
 	}
 
 };
