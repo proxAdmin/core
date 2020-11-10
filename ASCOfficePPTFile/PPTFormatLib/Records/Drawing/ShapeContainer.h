@@ -36,7 +36,7 @@
 
 #include "../ExObjRefAtom.h"
 #include "../TextBytesAtom.h"
-#include "../Text/TextCharsAtom.h"
+#include "../TextCharsAtom.h"
 #include "../TextHeaderAtom.h"
 #include "../PlaceHolderAtom.h"
 #include "../StyleTextPropAtom.h"

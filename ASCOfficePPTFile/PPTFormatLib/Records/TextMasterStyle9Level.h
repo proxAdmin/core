@@ -30,28 +30,15 @@
  *
  */
 #pragma once
+#include "../Reader/Records.h"
 
-#include "MouseClickInteractiveInfoContainer.h"
-#include "MouseOverInteractiveInfoContainer.h"
 
 namespace PPT_FORMAT
 {
-IRecord* InteractiveInfoInstanceFactory(SRecordHeader & oHeader)
+struct TextMasterStyle9Level
 {
-        switch (oHeader.RecInstance)
-        {
-        case 0:
-        {
-            return new CRecordMouseClickInteractiveInfoContainer;
-            break;
-        }
-        case 1:
-        {
-            return new CRecordMouseOverInteractiveInfoContainer;
-            break;
-        }
-        default:
-            return new CUnknownRecord;
-        }
+    void ReadFromStream(POLE::Stream* pStream){
+        
     }
+};
 }

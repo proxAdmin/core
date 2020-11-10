@@ -73,7 +73,7 @@ namespace PPT_FORMAT
 
 
 		// для ппт. чтобы не менять счас ничего
-        CTextRuler				m_oRuler;
+		CTextRuler				m_oRuler;
 
 		CTextStyles				m_oLayoutStyles;
 		CTextStyles				m_oStyles;

@@ -36,7 +36,7 @@
 namespace PPT_FORMAT
 {
 
-class CRecordDateTimeMCAtom : public CUnknownRecord
+class CRecordFooterMCAtom : public CUnknownRecord
 {
     _INT32  m_positon;
     BYTE    m_index;
