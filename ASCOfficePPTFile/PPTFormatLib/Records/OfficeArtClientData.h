@@ -30,50 +30,67 @@
  *
  */
 #pragma once
-#include "../Reader/Records.h"
-#include "KinsokuAtom.h"
-#include "KinsokuFollowingAtom.h"
-#include "KinsokuLeadingAtom.h"
+#include "ShapeProgBinaryTagSubContainerOrAtom.h"
 
-class CRecordKinsokuContainer : public CUnknownRecord
+namespace PPT_FORMAT
+{
+class CRecordShapeProgBinaryTagContainer : public CUnknownRecord
 {
 public:
-    _UINT32 m_nLevel;
+    CRecordShapeProgBinaryTagSubContainerOrAtom m_rec;
 
-    CRecordKinsokuContainer()
+    virtual void ReadFromStream(SRecordHeader & oHeader, POLE::Stream* pStream)
     {
+        m_oHeader = oHeader;
+
+        LONG lPos			=	0;
+        StreamUtils::StreamPosition ( lPos, pStream );
+
+        SRecordHeader ReadHeader;
+        m_rec.ReadFromStream(ReadHeader, pStream);
+
+        StreamUtils::StreamSeek(lPos + m_oHeader.RecLen, pStream);
     }
+};
 
-    ~CRecordKinsokuContainer()
-    {
-    }
+class CRecordOfficeArtClientAnchorData : public CUnknownRecord
+{
+public:
 
-    virtual void ReadFromStream ( SRecordHeader & oHeader, POLE::Stream* pStream )
+    virtual void ReadFromStream(SRecordHeader & oHeader, POLE::Stream* pStream)
     {
-        m_oHeader			=	oHeader;
+        m_oHeader = oHeader;
+
+        LONG lPos			=	0;
+        StreamUtils::StreamPosition ( lPos, pStream );
+
+        UINT lCurLen		=	0;
 
         SRecordHeader ReadHeader;
 
-        ReadHeader.ReadFromStream(pStream);
-        m_KinsokuAtom.ReadFromStream(ReadHeader, pStream);
-
-        if (m_KinsokuAtom.m_nLevel == 2)
+        while ( lCurLen < m_oHeader.RecLen )
         {
-            ReadHeader.ReadFromStream(pStream);
-            m_KinsokuLeadingAtom = new CRecordKinsokuLeadingAtom;
-            m_KinsokuLeadingAtom->ReadFromStream(ReadHeader, pStream);
+            if ( ReadHeader.ReadFromStream(pStream) == false)
+                break;
 
-            ReadHeader.ReadFromStream(pStream);
-            m_KinsokuFollowingAtom = new CRecordKinsokuFollowingAtom;
-            m_KinsokuFollowingAtom->ReadFromStream(ReadHeader, pStream);
+            lCurLen += 8 + ReadHeader.RecLen;
+
+            switch (ReadHeader.RecType)
+            {
+            case RT_ProgTags:
+            {
+                IRecord* pRec = new CRecordShapeProgBinaryTagSubContainerOrAtom;
+                pRec->ReadFromStream(ReadHeader, pStream);
+                delete pRec;
+                break;
+            }
+            default:
+                StreamUtils::StreamSkip(ReadHeader.RecLen, pStream);
+                break;
+            }
 
         }
+        StreamUtils::StreamSeek(lPos + m_oHeader.RecLen, pStream);
     }
-
-public:
-
-    CRecordKinsokuAtom                      m_KinsokuAtom;
-    nullable<CRecordKinsokuLeadingAtom>     m_KinsokuLeadingAtom;
-    nullable<CRecordKinsokuFollowingAtom>	m_KinsokuFollowingAtom;
-
 };
+}

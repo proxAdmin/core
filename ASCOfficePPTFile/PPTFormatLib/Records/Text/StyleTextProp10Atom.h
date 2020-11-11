@@ -39,6 +39,7 @@ namespace PPT_FORMAT
 {
 class CRecordStyleTextProp10Atom : public CUnknownRecord
 {
+public:
     std::vector<STextCFException10> rgStyleTextProp10;
 
     virtual void ReadFromStream(SRecordHeader &oHeader, POLE::Stream *pStream)

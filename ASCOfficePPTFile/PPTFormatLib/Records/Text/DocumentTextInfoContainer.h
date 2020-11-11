@@ -70,7 +70,7 @@ public:
 
             lCurLen += 8 + ReadHeader.RecLen;
 
-            switch (m_oHeader.RecType)
+            switch (ReadHeader.RecType)
             {
             case RT_Kinsoku:
             {

@@ -44,6 +44,7 @@ struct SStyleTextProp11 : public STextSIException
 
 class CRecordStyleTextProp11Atom : public CUnknownRecord
 {
+public:
     std::vector<SStyleTextProp11> m_rgStyleTextProp11;
 
     virtual void ReadFromStream(SRecordHeader &oHeader, POLE::Stream *pStream)

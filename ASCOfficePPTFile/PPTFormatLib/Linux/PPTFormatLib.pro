@@ -460,6 +460,9 @@ HEADERS += \
     ../Records/BuildAtom.h \
     ../Records/DocInfoListContainer.h \
     ../Records/DocProgTagsContainer.h \
+    ../Records/OfficeArtClientData.h \
+    ../Records/ShapeProgBinaryTagSubContainerOrAtom.h \
+    ../Records/ShapeProgTagsContainer.h \
     ../Records/SlideShow/InteractiveInfoAtom.h \
     ../Records/SlideShow/InteractiveInfoInstance.h \
     ../Records/SlideShow/MacroNameAtom.h \

@@ -43,6 +43,9 @@
 #include "../Records/SoundContainer.h"
 #include "../Enums/_includer.h"
 
+#include "../Records/Text/FontCollectionContainer.h"
+#include "../Records/Text/DocumentTextInfoContainer.h"
+
 
 CPPTUserInfo::CPPTUserInfo() :	CDocument(),
 								m_oUser(),
@@ -479,7 +482,7 @@ void CPPTUserInfo::ReadExtenalObjects(std::wstring strFolderMem)
 	{
 		CFontProperty oFont;
 		
-		oFont.Name		= oArrayFonts[nIndex]->m_strFaceName;
+        oFont.Name		= oArrayFonts[nIndex]->m_lfFaceName;
 		oFont.Charset	= oArrayFonts[nIndex]->m_lfCharSet;
 		oFont.PitchFamily = oArrayFonts[nIndex]->m_lfPitchAndFamily;
 
@@ -503,24 +506,25 @@ void CPPTUserInfo::FromDocument()
 	if (0 == oArrayDoc.size())
 		return;
 
-	std::vector<CRecordDocumentTextInfo*> oArrayInfo;
+    std::vector<CRecordDocumentTextInfoContainer*> oArrayInfo;
 	m_oDocument.GetRecordsByType(&oArrayInfo, false, true);
 
 	if (0 != oArrayInfo.size())
 	{
-		std::vector<CRecordTextMasterStyleAtom*> oStyles;
-		oArrayInfo[0]->GetRecordsByType(&oStyles, false, false);
+        CRecordTextMasterStyleAtom* pStyles;
+        pStyles = oArrayInfo[0]->m_textMasterStyleAtom.GetPointer();
 
-		if (0 != oStyles.size())
-			m_oDefaultTextStyle.SetStyles((PPT_FORMAT::CTextStyles*)oStyles[0]);		
+        // TODO 1
+//        if (pStyles)
+//            m_oDefaultTextStyle.SetStyles((PPT_FORMAT::CTextStyles*)pStyles);
 
-		std::vector<CRecordTextSIExceptionAtom*> oSI;
-		oArrayInfo[0]->GetRecordsByType(&oSI, false, false);
+        CRecordTextSIExceptionAtom* pSI;
+        pSI = oArrayInfo[0]->m_textSIDefaultsAtom.GetPointer();
 
-		if (0 != oSI.size())
+        if (pSI)
 		{
-            if (oSI[0]->m_textSIException.m_lang)
-                m_wLanguage = oSI[0]->m_textSIException.m_lid.get();
+            if (pSI->m_textSIException.m_lang)
+                m_wLanguage = pSI->m_textSIException.m_lid;
 //            if (oSI[0]->m_oSIRun.bLang)
 //				m_wLanguage = oSI[0]->m_oSIRun.Lang;
 

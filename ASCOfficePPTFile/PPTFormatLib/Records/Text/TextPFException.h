@@ -142,7 +142,7 @@ struct STextPFException : public IStruct
             m_wrapFlags = new SPFWrapFlags;
             m_wrapFlags->ReadFromStream(pStream);
         }
-        if (m_masks.m_fontAlign)
+        if (m_masks.m_textDirection)
             m_textDirection = new TextDirectionEnum(
                         (TextDirectionEnum)StreamUtils::ReadWORD(pStream));
     }

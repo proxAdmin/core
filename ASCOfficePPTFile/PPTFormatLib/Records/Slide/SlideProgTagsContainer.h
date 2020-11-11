@@ -34,7 +34,9 @@
 #include "../Animations/BuildListContainer.h"
 #include "../Animations/HashCode10Atom.h"
 
-#include "../TextMasterStyleAtom.h"
+//#include "../TextMasterStyleAtom.h"
+#include "../Text/TextMasterStyleAtom.h"
+
 #include "../HeadersFootersAtom.h"
 #include "../CString.h"
 

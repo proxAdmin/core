@@ -33,7 +33,9 @@
 
 #include "../Records/RecordsIncluder.h"
 #include "../Records/Animations/_includer.h"
-//#include "../Records/Text/DocumentTextInfoContainer.h"
+
+#include "../Records/Text/DocumentTextInfoContainer.h"
+
 #include <iostream>
 #include <iomanip>
 
@@ -504,7 +506,7 @@ IRecord* CreateByType(SRecordHeader oHeader)
     CREATE_BY_TYPE(RT_SlideAtom					, CRecordSlideAtom)
     CREATE_BY_TYPE(RT_NotesAtom					, CRecordNotesAtom)
     CREATE_BY_TYPE(RT_SlidePersistAtom			, CRecordSlidePersistAtom)
-    CREATE_BY_TYPE(RT_Environment				, CRecordDocumentTextInfo)
+    CREATE_BY_TYPE(RT_Environment				, CRecordDocumentTextInfoContainer)
     CREATE_BY_TYPE(RT_FontCollection			, CRecordFontCollection)
     CREATE_BY_TYPE(RT_FontCollection10			, CRecordFontCollection)
             //CREATE_BY_TYPE(RECORD_TYPE_UNKNOWN					, CRecordMasterPersistAtom)
@@ -624,7 +626,7 @@ IRecord* CreateByType(SRecordHeader oHeader)
     CREATE_BY_TYPE(RT_ExternalMidiAudio 					, CRecordExMIDIAudioContainer)
 
     CREATE_BY_TYPE(RT_List                                  , CRecordDocInfoListContainer)
-
+    CREATE_BY_TYPE(RTE_CLIENTDATA                           , CRecordOfficeArtClientAnchorData)
             // интерактив
     CREATE_BY_TYPE(RT_InteractiveInfoAtom       			, CRecordInteractiveInfoAtom)
     CREATE_BY_TYPE(RT_TextInteractiveInfoAtom       		, CRecordTextInteractiveInfoAtom)
