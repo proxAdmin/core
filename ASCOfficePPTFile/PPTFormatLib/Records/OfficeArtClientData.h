@@ -79,6 +79,9 @@ public:
             {
             case RT_ProgTags:
             {
+                // ShapeProgBinaryTagContainer
+                ReadHeader.ReadFromStream(pStream);
+
                 IRecord* pRec = new CRecordShapeProgBinaryTagSubContainerOrAtom;
                 pRec->ReadFromStream(ReadHeader, pStream);
                 delete pRec;

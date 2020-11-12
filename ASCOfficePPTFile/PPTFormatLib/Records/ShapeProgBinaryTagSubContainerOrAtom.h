@@ -107,7 +107,7 @@ public:
         SRecordHeader ReadHeader;
         ReadHeader.ReadFromStream(pStream);
 
-        if (m_oHeader.RecType == RT_CString)
+        if (ReadHeader.RecType == RT_CString)
         {
             m_pTagName = new CRecordCString();
             m_pTagName->ReadFromStream(ReadHeader, pStream);

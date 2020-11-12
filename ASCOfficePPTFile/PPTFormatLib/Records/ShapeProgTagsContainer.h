@@ -72,12 +72,19 @@ public:
             {
                 IRecord* pRec = new CRecordProgStringTagContainer;
                 pRec->ReadFromStream(ReadHeader, pStream);
+
+                m_rgChildRec.push_back(pRec);
                 break;
             }
             case RT_ProgBinaryTag:
             {
+                // ShapeProgBinaryTagContainer
+                ReadHeader.ReadFromStream(pStream);
+
                 IRecord* pRec = new CRecordShapeProgBinaryTagSubContainerOrAtom;
                 pRec->ReadFromStream(ReadHeader, pStream);
+
+                m_rgChildRec.push_back(pRec);
                 break;
             }
             default:
