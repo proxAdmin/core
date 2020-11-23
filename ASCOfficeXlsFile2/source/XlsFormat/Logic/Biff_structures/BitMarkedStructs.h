@@ -38,7 +38,7 @@
 #include "../../../Common/DocxFormat/Source/Base/Types_32.h"
 #include "BiffStructure.h"
 #include "BiffAttribute.h"
-#include <Auxiliary/HelpFunc.h>
+#include "../../Auxiliary/HelpFunc.h"
 #include "Boolean.h"
 
 #pragma pack(1)

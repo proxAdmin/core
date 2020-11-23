@@ -48,6 +48,7 @@ class OfficeArtContainer : public OfficeArtRecord
 public:
 	OfficeArtContainer(const unsigned char recVer, const unsigned short recType, const OfficeArtClientAnchorType anchor_type);
 
+
 	static const XLS::ElementType	type = XLS::typeOfficeArtContainer;
 
 	virtual void loadFields(XLS::CFRecord& record);

@@ -34,6 +34,8 @@
 #include "../Records/RecordsIncluder.h"
 #include "../Records/Animations/_includer.h"
 
+#include "crecordodraw.h"
+
 #include <iostream>
 #include <iomanip>
 
@@ -599,25 +601,25 @@ IRecord* CreateByType(SRecordHeader oHeader)
     CREATE_BY_TYPE(RT_ExternalMediaAtom     				, CRecordExMediaAtom)
     CREATE_BY_TYPE(RT_ExternalOleControlAtom				, CRecordExControlAtom)
 
-    CREATE_BY_TYPE(RTE_BSTORE_CONTAINER		, CRecordBlipStoreContainer)
-    CREATE_BY_TYPE(RTE_BSE					, CRecordBlipStoreEntry)
+    CREATE_BY_TYPE(RTE_BSTORE_CONTAINER		, CRecordODraw)
+    CREATE_BY_TYPE(RTE_BSE					, CRecordODraw)
 
-    CREATE_BY_TYPE(RTE_DG_CONTAINER			, CRecordDrawingContainer)
-    CREATE_BY_TYPE(RTE_DGG					, CRecordDrawingGroup)
-    CREATE_BY_TYPE(RTE_DG					, CRecordDrawingRecord)
-    CREATE_BY_TYPE(RTE_SPGR					, CRecordGroupShape)
-    CREATE_BY_TYPE(RTE_SPGR_CONTAINER		, CRecordGroupShapeContainer)
-    CREATE_BY_TYPE(RTE_SP_CONTAINER			, CRecordShapeContainer)
-    CREATE_BY_TYPE(RTE_SP					, CRecordShape)
-    CREATE_BY_TYPE(RTE_CLIENTANCHOR			, CRecordClientAnchor)
-    CREATE_BY_TYPE(RTE_CHILDANCHOR			, CRecordChildAnchor)
-    CREATE_BY_TYPE(RTE_OPT					, CRecordShapeProperties)
-    CREATE_BY_TYPE(RTE_SECONDARY_OPT		, CRecordShapeProperties)
-    CREATE_BY_TYPE(RTE_TETRIARY_OPT			, CRecordShapeProperties)
-    CREATE_BY_TYPE(RTE_REGROUPITEMS			, CRecordRegGroupItems)
-    CREATE_BY_TYPE(RTE_SPLITMENUCOLORS		, CRecordSplitMenuColorRecord)
-    CREATE_BY_TYPE(RTE_COLORMRU				, CRecordMostRecentlyUserColors)
-    CREATE_BY_TYPE(RTE_CLIENTDATA           , CRecordOfficeArtClientData)
+    CREATE_BY_TYPE(RTE_DG_CONTAINER			, CRecordODraw)
+    CREATE_BY_TYPE(RTE_DGG					, CRecordODraw)
+    CREATE_BY_TYPE(RTE_DG					, CRecordODraw)
+    CREATE_BY_TYPE(RTE_SPGR					, CRecordODraw)
+    CREATE_BY_TYPE(RTE_SPGR_CONTAINER		, CRecordODraw)
+    CREATE_BY_TYPE(RTE_SP_CONTAINER			, CRecordODraw)
+    CREATE_BY_TYPE(RTE_SP					, CRecordODraw)
+    CREATE_BY_TYPE(RTE_CLIENTANCHOR			, CRecordODraw)
+    CREATE_BY_TYPE(RTE_CHILDANCHOR			, CRecordODraw)
+    CREATE_BY_TYPE(RTE_OPT					, CRecordODraw)
+    CREATE_BY_TYPE(RTE_SECONDARY_OPT		, CRecordODraw)
+    CREATE_BY_TYPE(RTE_TETRIARY_OPT			, CRecordODraw)
+    CREATE_BY_TYPE(RTE_REGROUPITEMS			, CRecordODraw)
+    CREATE_BY_TYPE(RTE_SPLITMENUCOLORS		, CRecordODraw)
+    CREATE_BY_TYPE(RTE_COLORMRU				, CRecordODraw)
+    CREATE_BY_TYPE(RTE_CLIENTDATA           , CRecordODraw)
 
     CREATE_BY_TYPE(RT_ExternalCdAudio   					, CRecordExCDAudioContainer)
     CREATE_BY_TYPE(RT_ExternalWavAudioLink  				, CRecordWAVAudioLinkContainer)

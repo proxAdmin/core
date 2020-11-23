@@ -32,7 +32,7 @@
 #pragma once
 
 #include "OfficeArtRecord.h"
-#include <Binary/CFRecord.h>
+#include "../../../Binary/CFRecord.h"
 #include "OfficeArtRecordHeader.h"
 #include "OfficeArtBlip.h"
 

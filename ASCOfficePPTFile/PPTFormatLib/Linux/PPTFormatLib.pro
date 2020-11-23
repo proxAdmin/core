@@ -391,6 +391,7 @@ HEADERS += \
     ../Reader/Slide.h \
     ../Reader/SlideInfo.h \
     ../Reader/SlidePersist.h \
+    ../Reader/crecordodraw.h \
     ../Records/Animations/AnimationInfoAtom.h \
     ../Records/Animations/AnimationInfoContainer.h \
     ../Records/Animations/BuildAtom.h \
@@ -671,5 +672,5 @@ SOURCES += \
     ../../../ASCOfficePPTXFile/Editor/Drawing/TextAttributesEx.cpp \
     ../../../Common/3dParty/pole/pole.cpp \
     ../PPTXWriter/TimingConverter.cpp \
+    ../Reader/crecordodraw.cpp \
     ../Records/Animations/TimeVariant.cpp
-

@@ -85,6 +85,14 @@ CFRecord::CFRecord(CFStreamPtr stream, GlobalWorkbookInfoPtr global_info)
 		}
 	}
 }
+
+// Create a record
+CFRecord::CFRecord(CFStreamPtr stream, LONG pos)
+:	rdPtr(pos) // seek to the start
+{
+    file_ptr = static_cast<unsigned int>(stream->getStreamPointer());
+}
+
 // Create a record and read its data from the data stream
 CFRecord::CFRecord(NSFile::CFileBinary &file, GlobalWorkbookInfoPtr global_info)
 :	rdPtr(0),
