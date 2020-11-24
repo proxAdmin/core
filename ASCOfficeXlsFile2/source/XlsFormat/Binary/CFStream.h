@@ -43,7 +43,7 @@ namespace XLS
 class CFStream
 {
 public:
-	CFStream(POLE::Stream* stream);
+    CFStream(POLE::Stream* stream, bool bDeleteStream = true);
 	~CFStream();
 
 	void copy( std::wstring streamNameCreate, POLE::Storage * storageOut);
@@ -101,6 +101,8 @@ public:
 private:
 	CFStream::ReceiverItems		receiver_items;
 	CFStream::SourceItems		source_items;
+
+    bool bDeleteStream;
 };
 
 } // namespace XLS

@@ -30,9 +30,9 @@ void CRecordODraw::ReadFromStream(SRecordHeader & oHeader, POLE::Stream* pStream
 {
     m_oHeader = oHeader;
 
-    XLS::CFStreamPtr stream = XLS::CFStreamPtr(new CFStream(pStream));
+    XLS::CFStreamPtr stream = XLS::CFStreamPtr(new CFStream(pStream, false));
     LONG lPos; StreamUtils::StreamPosition(lPos, pStream);
-    XLS::CFRecord record(stream);
+    XLS::CFRecord record(stream, m_oHeader.RecLen);
 
 
     auto anchor_type_ = OfficeArtRecord::CA_HF;

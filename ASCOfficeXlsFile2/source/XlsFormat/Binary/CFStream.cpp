@@ -41,7 +41,7 @@
 namespace XLS
 {
 
-CFStream::CFStream(POLE::Stream* stream)
+CFStream::CFStream(POLE::Stream* stream, bool bDeleteStream) : bDeleteStream(bDeleteStream)
 {
 	if(NULL == stream)
 	{
@@ -53,8 +53,11 @@ CFStream::CFStream(POLE::Stream* stream)
 
 CFStream::~CFStream()
 {
-	if (stream_) delete stream_;
-	stream_ = NULL;
+    if (stream_ && bDeleteStream)
+    {
+        delete stream_;
+        stream_ = NULL;
+    }
 }
 
 
