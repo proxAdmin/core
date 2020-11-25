@@ -416,6 +416,8 @@ public:
 
     chart_series_attlist chart_series_attlist_;
 	office_element_ptr_array content_;
+//-------------------------
+	bool local_data = false;
 };
 CP_REGISTER_OFFICE_ELEMENT2(chart_series);
 

@@ -1239,12 +1239,14 @@ void OoxConverter::convert(OOX::Spreadsheet::CT_AxDataSource* cat, int type)
 		if (cat->m_numLit->m_formatCode)
 			format_code = *cat->m_numLit->m_formatCode;
 
+		odf_context()->chart_context()->set_series_cache(true);
 		odf_context()->chart_context()->set_series_value_formula(L"", format_code);
 		
 		convert(cat->m_numLit, false, false);	
 	}
 	else if (cat->m_strLit)
 	{
+		odf_context()->chart_context()->set_series_cache(true);
 		odf_context()->chart_context()->set_category_axis_formula(L"", format_code, type);
 		convert(cat->m_strLit, true, false);
 	}
@@ -1282,6 +1284,7 @@ void OoxConverter::convert(OOX::Spreadsheet::CT_NumDataSource* val)
 		if (val->m_numLit->m_formatCode)
 			format_code = *val->m_numLit->m_formatCode;
 
+		odf_context()->chart_context()->set_series_cache(true);
 		odf_context()->chart_context()->set_series_value_formula(L"", format_code);
 		
 		convert(val->m_numLit, false, false);
@@ -1360,7 +1363,7 @@ void OoxConverter::convert(OOX::Spreadsheet::CT_NumData	*num_data, bool categori
 	std::wstring format;
 	if (num_data->m_formatCode) format = *num_data->m_formatCode;
 	
-	odf_context()->chart_context()->set_cash(format, data, categories, label);
+	odf_context()->chart_context()->set_cache(format, data, categories, label);
 }
 
 void OoxConverter::convert(OOX::Spreadsheet::CT_StrData *str_data, bool categories, bool label)
@@ -1376,7 +1379,7 @@ void OoxConverter::convert(OOX::Spreadsheet::CT_StrData *str_data, bool categori
 	}
 	std::wstring format;
 
-	odf_context()->chart_context()->set_cash(format, data, categories, label);
+	odf_context()->chart_context()->set_cache(format, data, categories, label);
 }
 
 //---------------------------------------------------------------------------------------------------------------

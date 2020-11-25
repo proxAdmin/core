@@ -39,6 +39,7 @@
 #include "../odf/style_text_properties.h"
 
 #include "oox_chart_shape.h"
+#include "../../ASCOfficeOdfFile/src/odf/datatypes/chartclass.h"
 
 namespace cpdoccore {
 namespace oox {
@@ -48,40 +49,40 @@ void oox_plot_area::add_chart(int type)
 	oox_chart_ptr chart ;
 	switch(type)
 	{			
-	case 1://chart_line:
+	case odf_types::chart_class::line:
 		chart = oox_line_chart::create();
 		break;
-	case 2://chart_area:
+	case odf_types::chart_class::area:
 		chart = oox_area_chart::create();
 		break;
-	case 3://chart_circle:
+	case odf_types::chart_class::circle:
 		chart = oox_pie_chart::create();
 		break;	
-	case 4://chart_ring:
+	case odf_types::chart_class::ring:
 		chart = oox_doughnut_chart::create();
 		break;	
-	case 5://chart_scatter:
+	case odf_types::chart_class::scatter:
 		chart = oox_scatter_chart::create();
 		break;	
-	case 6://chart_radar:		
+	case odf_types::chart_class::radar:
 		chart = oox_radar_chart::create();
 		break;	
-	case 7://chart_bar:		
+	case odf_types::chart_class::bar:
 		chart = oox_bar_chart::create();
 		break;
-	case 8://chart_stock:		
+	case odf_types::chart_class::stock:
 		chart = oox_stock_chart::create();
 		break;
-	case 9://chart_bubble:
+	case odf_types::chart_class::bubble:
 		chart = oox_bubble_chart::create();
 		break;			
-	case 10://chart_surface:
+	case odf_types::chart_class::surface:
 		chart = oox_area_chart::create();
 		break;	
-	case 12://filled radar
+	case odf_types::chart_class::filled_radar:
 		chart = oox_radar_chart::create(L"filled");
 		break;
-	case 11://chart_gantt:
+	case odf_types::chart_class::gantt:
 	default:
 		chart = oox_bar_chart::create();
 		break;

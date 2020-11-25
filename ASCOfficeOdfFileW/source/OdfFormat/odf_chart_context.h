@@ -85,6 +85,7 @@ public:
 		void start_group_series();
 			void add_axis_group_series(unsigned int id);
 				void start_series (odf_types::chart_class::type type);
+					void set_series_cache			(bool val);
 					void set_series_value_formula	(const std::wstring & oox_ref, const std::wstring & format_code);
 					void set_series_label_formula	(const std::wstring & oox_ref);
 					void set_category_axis_formula	(const std::wstring & oox_ref, const std::wstring & format_code, int type);
@@ -156,8 +157,8 @@ public:
 		void set_layout_w(double *val,int mode);
 		void set_layout_h(double *val,int mode);
 
-		void set_local_table(bool Val, bool use_cash_only = false);
-		void set_cash(std::wstring format, std::vector<std::wstring> &data, bool categories, bool label);
+		void set_local_table(bool Val, bool use_cache_only = false);
+		void set_cache(std::wstring format, std::vector<std::wstring> &data, bool categories, bool label);
 
 	void end_chart();
 
