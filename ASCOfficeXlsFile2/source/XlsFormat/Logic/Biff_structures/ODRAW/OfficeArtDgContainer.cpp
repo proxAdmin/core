@@ -70,20 +70,20 @@ const bool OfficeArtDgContainer::CheckIfContainerSizeOK(XLS::CFRecord& record)
 
 void OfficeArtDgContainer::loadFields(XLS::CFRecord& record)
 {
-	try
-	{
-		OfficeArtRecordHeader rh_test;
-		record >> rh_test;
-		record.RollRdPtrBack(8);//sizeof(OfficeArtRecordHeader)
+    try
+    {
+        OfficeArtRecordHeader rh_test;
+        record >> rh_test;
+        record.RollRdPtrBack(8);//sizeof(OfficeArtRecordHeader)
 		
-		if ((rh_test.recType & 0xF000) != 0xF000)
-		{
-			return;
-		}
-		OfficeArtContainer::loadFields(record);
-	}catch(...)
-	{
-	}
+        if ((rh_test.recType & 0xF000) != 0xF000)
+        {
+            return; ;
+        }
+        OfficeArtContainer::loadFields(record);
+    }catch(...)
+    {
+    }
 	
     for (size_t i = 0 ; i < child_records.size(); i++)
 	{

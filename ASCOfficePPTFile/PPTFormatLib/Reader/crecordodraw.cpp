@@ -108,6 +108,11 @@ void CRecordODraw::ReadFromStream(SRecordHeader & oHeader, POLE::Stream* pStream
         default:
             break;
     }
+    pArtRecord->rh_own.recInstance = m_oHeader.RecInstance;
+    pArtRecord->rh_own.recLen = m_oHeader.RecLen;
+    pArtRecord->rh_own.recType = m_oHeader.RecType;
+    pArtRecord->rh_own.recVer = m_oHeader.RecVersion;
+
     pArtRecord->loadFields(record);
 
 }

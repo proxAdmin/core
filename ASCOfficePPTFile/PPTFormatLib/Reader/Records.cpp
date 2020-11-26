@@ -606,6 +606,7 @@ IRecord* CreateByType(SRecordHeader oHeader)
 
     CREATE_BY_TYPE(RTE_DG_CONTAINER			, CRecordODraw)
     CREATE_BY_TYPE(RTE_DGG					, CRecordODraw)
+    CREATE_BY_TYPE(RTE_DGG_CONTAINER					, CRecordODraw)
     CREATE_BY_TYPE(RTE_DG					, CRecordODraw)
     CREATE_BY_TYPE(RTE_SPGR					, CRecordODraw)
     CREATE_BY_TYPE(RTE_SPGR_CONTAINER		, CRecordODraw)

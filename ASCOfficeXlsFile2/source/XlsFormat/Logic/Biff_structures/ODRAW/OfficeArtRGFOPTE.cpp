@@ -125,6 +125,8 @@ void OfficeArtRGFOPTE::load(XLS::CFRecord& record)
 	{
 		if((*it)->fComplex && (*it)->op > 0)
 		{
+            auto what = (*it);
+            auto* ptr = what.get();
 			(*it)->ReadComplexData(record);
 		}
 	}

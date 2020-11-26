@@ -1049,6 +1049,8 @@ void MetroBlob::ReadComplexData(XLS::CFRecord& record)
 
 	NSFile::CFileBinary file;
 
+    if (!global_info) return;
+
 	std::wstring tempFileName = global_info->tempDirectory + FILE_SEPARATOR_STR + L"tempMetroBlob.zip";
 
     if (file.CreateFileW(tempFileName))
