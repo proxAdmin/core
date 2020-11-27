@@ -53,9 +53,7 @@ void OfficeArtFCalloutRule::loadFields(XLS::CFRecord& record)
 
 void OfficeArtClientTextbox::loadFields(XLS::CFRecord& record)
 {
-	if (rh_own.recLen > 0)
-	{
-	}
+
 }
 
 void OfficeArtClientData::loadFields(XLS::CFRecord& record)

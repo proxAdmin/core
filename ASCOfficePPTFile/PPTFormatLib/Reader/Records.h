@@ -33,13 +33,12 @@
 
 #include "PPTFileDefines.h"
 #include "../Enums/RecordType.h"
-#include "../Reader/ReadStructures.h"
+#include "ReadStructures.h"
 #include "../../../ASCOfficePPTXFile/Editor/Drawing/Shapes/BaseShape/PPTShape/Enums.h"
 #include "../../../ASCOfficeXlsFile2/source/XlsFormat/Binary/CFStream.h"
 #include "../../../Common/3dParty/pole/pole.h"
 #include "../../../OfficeCryptReader/source/CryptTransform.h"
 #include "../../../Common/DocxFormat/Source/Base/Nullable.h"
-
 
 #include <boost/smart_ptr/shared_array.hpp>
 
