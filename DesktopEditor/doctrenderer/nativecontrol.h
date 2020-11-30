@@ -1205,7 +1205,11 @@ public:
 class CV8Initializer
 {
 private:
+#ifdef V8_VERSION_8_PLUS
+    std::unique_ptr<v8::Platform> m_platform;
+#else
     v8::Platform* m_platform;
+#endif
     v8::ArrayBuffer::Allocator* m_pAllocator;
 
 public:
@@ -1219,8 +1223,13 @@ public:
 #ifndef V8_OS_XP
         v8::V8::InitializeICUDefaultLocation(sPrA.c_str());
         v8::V8::InitializeExternalStartupData(sPrA.c_str());
+#ifdef V8_VERSION_8_PLUS
+        m_platform = v8::platform::NewDefaultPlatform();
+        v8::V8::InitializePlatform(m_platform.get());
+#else
         m_platform = v8::platform::CreateDefaultPlatform();
         v8::V8::InitializePlatform(m_platform);
+#endif
         v8::V8::Initialize();
 #else
         m_platform = v8::platform::CreateDefaultPlatform();
@@ -1234,7 +1243,9 @@ public:
     {
         v8::V8::Dispose();
         v8::V8::ShutdownPlatform();
+#ifndef V8_VERSION_8_PLUS
         delete m_platform;
+#endif
         if (m_pAllocator)
             delete m_pAllocator;
     }
@@ -1326,7 +1337,12 @@ public:
         if (NULL == Data)
         {
             Source = new v8::ScriptCompiler::Source(source);
-            script = v8::ScriptCompiler::Compile(_context, Source, v8::ScriptCompiler::kProduceCodeCache).ToLocalChecked();
+            #ifdef V8_VERSION_8_PLUS
+            #define CODE_CACHE_GEN v8::ScriptCompiler::kConsumeCodeCache
+            #else
+            #define CODE_CACHE_GEN v8::ScriptCompiler::kProduceCodeCache
+            #endif
+            script = v8::ScriptCompiler::Compile(_context, Source, CODE_CACHE_GEN).ToLocalChecked();
 
             const v8::ScriptCompiler::CachedData* _cachedData = Source->GetCachedData();
             NSFile::CFileBinary oFileTest;

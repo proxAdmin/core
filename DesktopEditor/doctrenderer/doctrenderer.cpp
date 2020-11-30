@@ -441,7 +441,7 @@ namespace NSDoctRenderer
         {
             v8::Local<v8::Object> js_objectApi = api_js_maybe_null;
             if (js_objectApi.IsEmpty())
-                js_objectApi = global_js->Get(v8::String::NewFromUtf8(isolate, "Api"))->ToObject();
+                js_objectApi = global_js->Get(CV8Convert::FromStringA("Api", isolate))->ToObject(context);
 
             bool bIsBreak = false;
             if (js_objectApi.IsEmpty() || !js_objectApi->IsObject())
@@ -460,7 +460,7 @@ namespace NSDoctRenderer
             case DoctRendererFormat::PPTT:
             case DoctRendererFormat::XLST:
             {
-                v8::Handle<v8::Value> js_func_get_file_s = js_objectApi->Get(v8::String::NewFromUtf8(isolate, "asc_nativeGetFileData"));
+                v8::Handle<v8::Value> js_func_get_file_s = js_objectApi->Get(CV8Convert::FromStringA("asc_nativeGetFileData", isolate));
                 if (js_func_get_file_s->IsFunction())
                 {
                     v8::Handle<v8::Function> func_get_file_s = v8::Handle<v8::Function>::Cast(js_func_get_file_s);
@@ -509,7 +509,7 @@ namespace NSDoctRenderer
             }
             case DoctRendererFormat::HTML:
             {
-                v8::Handle<v8::Value> js_func_get_file_s = js_objectApi->Get(v8::String::NewFromUtf8(isolate, "asc_nativeGetHtml"));
+                v8::Handle<v8::Value> js_func_get_file_s = js_objectApi->Get(CV8Convert::FromStringA("asc_nativeGetHtml", isolate));
                 if (js_func_get_file_s->IsFunction())
                 {
                     v8::Handle<v8::Function> func_get_file_s = v8::Handle<v8::Function>::Cast(js_func_get_file_s);
@@ -543,8 +543,8 @@ namespace NSDoctRenderer
             case DoctRendererFormat::PDF:
             case DoctRendererFormat::PPTX_THEME_THUMBNAIL:
             {
-                v8::Handle<v8::Value> js_func_calculate = js_objectApi->Get(v8::String::NewFromUtf8(isolate, "asc_nativeCalculateFile"));
-                v8::Handle<v8::Value> js_func_pages_count = js_objectApi->Get(v8::String::NewFromUtf8(isolate, "asc_nativePrintPagesCount"));
+                v8::Handle<v8::Value> js_func_calculate = js_objectApi->Get(CV8Convert::FromStringA("asc_nativeCalculateFile", isolate));
+                v8::Handle<v8::Value> js_func_pages_count = js_objectApi->Get(CV8Convert::FromStringA("asc_nativePrintPagesCount", isolate));
 
                 // CALCULATE
                 if (js_func_calculate->IsFunction())
@@ -555,12 +555,10 @@ namespace NSDoctRenderer
                         args[0] = v8::Undefined(isolate);
                     else
                     {
-                        std::string sTmp = U_TO_UTF8((pParams->m_sJsonParams));
-
                     #ifndef V8_OS_XP
-                        args[0] = v8::JSON::Parse(context, v8::String::NewFromUtf8(isolate, (char*)sTmp.c_str())).FromMaybe(v8::Local<v8::Value>());
+                        args[0] = v8::JSON::Parse(context, CV8Convert::FromStringW(pParams->m_sJsonParams));
                     #else
-                        args[0] = v8::JSON::Parse(v8::String::NewFromUtf8(isolate, (char*)sTmp.c_str()));
+                        args[0] = v8::JSON::Parse(CV8Convert::FromStringW(pParams->m_sJsonParams));
                     #endif
                     }
 
@@ -611,7 +609,7 @@ namespace NSDoctRenderer
                 // RENDER
                 if (!bIsBreak && DoctRendererFormat::PDF == pParams->m_eDstFormat)
                 {
-                    v8::Handle<v8::Value> js_func_get_file_s = js_objectApi->Get(v8::String::NewFromUtf8(isolate, "asc_nativeGetPDF"));
+                    v8::Handle<v8::Value> js_func_get_file_s = js_objectApi->Get(CV8Convert::FromStringA("asc_nativeGetPDF", isolate));
                     if (js_func_get_file_s->IsFunction())
                     {
                         v8::Handle<v8::Function> func_get_file_s = v8::Handle<v8::Function>::Cast(js_func_get_file_s);
@@ -620,12 +618,10 @@ namespace NSDoctRenderer
                             args[0] = v8::Undefined(isolate);
                         else
                         {
-                            std::string sTmp = U_TO_UTF8((pParams->m_sJsonParams));
-
                         #ifndef V8_OS_XP
-                            args[0] = v8::JSON::Parse(context, v8::String::NewFromUtf8(isolate, (char*)sTmp.c_str())).FromMaybe(v8::Local<v8::Value>());
+                            args[0] = v8::JSON::Parse(context, CV8Convert::FromStringW(pParams->m_sJsonParams, isolate));
                         #else
-                            args[0] = v8::JSON::Parse(v8::String::NewFromUtf8(isolate, (char*)sTmp.c_str()));
+                            args[0] = v8::JSON::Parse(CV8Convert::FromStringW(pParams->m_sJsonParams, isolate));
                         #endif
                         }
 
@@ -672,7 +668,7 @@ namespace NSDoctRenderer
                 }
                 if (!bIsBreak && DoctRendererFormat::PPTX_THEME_THUMBNAIL == pParams->m_eDstFormat)
                 {
-                    v8::Handle<v8::Value> js_func_get_file_thumbnail = js_objectApi->Get(v8::String::NewFromUtf8(isolate, "asc_nativeGetThemeThumbnail"));
+                    v8::Handle<v8::Value> js_func_get_file_thumbnail = js_objectApi->Get(CV8Convert::FromStringA("asc_nativeGetThemeThumbnail", isolate));
                     if (js_func_get_file_thumbnail->IsFunction())
                     {
                         v8::Handle<v8::Function> func_get_file_thumbnail = v8::Handle<v8::Function>::Cast(js_func_get_file_thumbnail);
@@ -710,9 +706,9 @@ namespace NSDoctRenderer
                             if (!js_result2->IsNull())
                             {
                                 v8::Local<v8::Object> objNative = js_result2->ToObject();
-                                v8::Local<v8::Uint8Array> pArray = v8::Local<v8::Uint8Array>::Cast(objNative->Get(v8::String::NewFromUtf8(isolate, "data")));
-                                std::wstring sThemeName = CV8Convert::ToString(objNative->Get(v8::String::NewFromUtf8(isolate, "name")));
-                                int nDataLen = CV8Convert::ToInt(objNative->Get(v8::String::NewFromUtf8(isolate, "dataLen")));
+                                v8::Local<v8::Uint8Array> pArray = v8::Local<v8::Uint8Array>::Cast(objNative->Get(CV8Convert::FromStringA("data", isolate)));
+                                std::wstring sThemeName = CV8Convert::ToString(objNative->Get(CV8Convert::FromStringA("name", isolate)));
+                                int nDataLen = CV8Convert::ToInt(objNative->Get(CV8Convert::FromStringA("dataLen", isolate)));
                                 if (sThemeName.empty())
                                     sThemeName = L"Default";
 
@@ -757,7 +753,7 @@ namespace NSDoctRenderer
 
                 v8::Context::Scope context_scope(context);
                 v8::TryCatch try_catch(isolate);
-                v8::Local<v8::String> source = v8::String::NewFromUtf8(isolate, strScript.c_str());
+                v8::Local<v8::String> source = CV8Convert::FromStringA(strScript, isolate);
                 v8::Local<v8::Script> script;
 
                 LOGGER_SPEED_LAP("pre_compile")
@@ -815,7 +811,7 @@ namespace NSDoctRenderer
                 // GET_NATIVE_ENGINE
                 if (!bIsBreak)
                 {
-                    v8::Handle<v8::Value> js_func_get_native = global_js->Get(v8::String::NewFromUtf8(isolate, "GetNativeEngine"));
+                    v8::Handle<v8::Value> js_func_get_native = global_js->Get(CV8Convert::FromStringA("GetNativeEngine", isolate));
                     v8::Local<v8::Object> objNative;
                     if (js_func_get_native->IsFunction())
                     {
@@ -864,7 +860,7 @@ namespace NSDoctRenderer
                 // OPEN
                 if (!bIsBreak)
                 {
-                    v8::Handle<v8::Value> js_func_open = global_js->Get(v8::String::NewFromUtf8(isolate, "NativeOpenFileData"));
+                    v8::Handle<v8::Value> js_func_open = global_js->Get(CV8Convert::FromStringA("NativeOpenFileData", isolate));
                     if (js_func_open->IsFunction())
                     {
                         v8::Handle<v8::Function> func_open = v8::Handle<v8::Function>::Cast(js_func_open);
@@ -879,8 +875,7 @@ namespace NSDoctRenderer
                         std::wstring sXlsx = NSCommon::GetDirectoryName(pNative->GetFilePath()) + L"/Editor.xlsx";
                         if (NSFile::CFileBinary::Exists(sXlsx))
                         {
-                            std::string sXlsxA = U_TO_UTF8(sXlsx);
-                            args_open[2] = v8::String::NewFromUtf8(isolate, (char*)(sXlsxA.c_str()));
+                            args_open[2] = CV8Convert::FromStringW(sXlsx, isolate);
                         }
                         else
                         {
@@ -890,7 +885,7 @@ namespace NSDoctRenderer
                         v8::Local<v8::Object> globalParams = v8::Object::New(isolate);
                         if (0 < m_oParams.m_nLcid)
                         {
-                            globalParams->Set(v8::String::NewFromUtf8(isolate, "locale", v8::String::kNormalString, -1), v8::Int32::New(isolate, m_oParams.m_nLcid));
+                            globalParams->Set(CV8Convert::FromStringA("locale", isolate), v8::Int32::New(isolate, m_oParams.m_nLcid));
                         }
                         args_open[3] = globalParams;
 
@@ -908,7 +903,7 @@ namespace NSDoctRenderer
                             bIsBreak = true;
                         }
 
-                        js_objectApi = global_js->Get(v8::String::NewFromUtf8(isolate, "Api"))->ToObject();
+                        js_objectApi = global_js->Get(CV8Convert::FromStringA("Api", isolate))->ToObject();
                         if (try_catch.HasCaught())
                         {
                             std::wstring strCode        = CV8Convert::GetSourceLine(try_catch.Message());
@@ -928,7 +923,7 @@ namespace NSDoctRenderer
                 // CHANGES
                 if (!bIsBreak)
                 {
-                    v8::Handle<v8::Value> js_func_apply_changes = js_objectApi->Get(v8::String::NewFromUtf8(isolate, "asc_nativeApplyChanges2"));
+                    v8::Handle<v8::Value> js_func_apply_changes = js_objectApi->Get(CV8Convert::FromStringA("asc_nativeApplyChanges2", isolate));
                     if (m_oParams.m_arChanges.GetCount() != 0)
                     {
                         int nCurrentIndex = 0;
@@ -1030,7 +1025,7 @@ namespace NSDoctRenderer
                                 }
 
                                 pBaseData[dwSizeBase] = 0;
-                                v8::Handle<v8::Value> js_func_mm_start = js_objectApi->Get(v8::String::NewFromUtf8(isolate, "asc_StartMailMergeByList"));
+                                v8::Handle<v8::Value> js_func_mm_start = js_objectApi->Get(CV8Convert::FromStringA("asc_StartMailMergeByList", isolate));
 
                                 if (js_func_mm_start->IsFunction())
                                 {
@@ -1038,9 +1033,9 @@ namespace NSDoctRenderer
                                     v8::Handle<v8::Value> args_changes[1];
 
                                 #ifndef V8_OS_XP
-                                    args_changes[0] = v8::JSON::Parse(context, v8::String::NewFromUtf8(isolate, (char*)(pBaseData + nStart))).FromMaybe(v8::Local<v8::Value>());
+                                    args_changes[0] = v8::JSON::Parse(context, CV8Convert::FromCharPtr((char*)(pBaseData + nStart), isolate));
                                 #else
-                                    args_changes[0] = v8::JSON::Parse(v8::String::NewFromUtf8(isolate, (char*)(pBaseData + nStart)));
+                                    args_changes[0] = v8::JSON::Parse(CV8Convert::FromCharPtr((char*)(pBaseData + nStart), isolate));
                                 #endif
 
                                     if (try_catch.HasCaught())
@@ -1087,7 +1082,7 @@ namespace NSDoctRenderer
                             strReturnParams += L"<MailMergeFields>";
                             for (int nIndexMM  = m_oParams.m_nMailMergeIndexStart; nIndexMM <= m_oParams.m_nMailMergeIndexEnd && !bIsBreak; ++nIndexMM)
                             {
-                                v8::Handle<v8::Value> js_func_mm_preview = js_objectApi->Get(v8::String::NewFromUtf8(isolate, "asc_PreviewMailMergeResult"));
+                                v8::Handle<v8::Value> js_func_mm_preview = js_objectApi->Get(CV8Convert::FromStringA("asc_PreviewMailMergeResult", isolate));
 
                                 if (js_func_mm_preview->IsFunction())
                                 {
@@ -1126,14 +1121,14 @@ namespace NSDoctRenderer
 
                                 if (!bIsBreak)
                                 {
-                                    v8::Handle<v8::Value> js_func_mm_field = js_objectApi->Get(v8::String::NewFromUtf8(isolate, "asc_GetMailMergeFiledValue"));
+                                    v8::Handle<v8::Value> js_func_mm_field = js_objectApi->Get(CV8Convert::FromStringA("asc_GetMailMergeFiledValue", isolate));
 
                                     if (js_func_mm_field->IsFunction())
                                     {
                                         v8::Handle<v8::Function> func_mm_field = v8::Handle<v8::Function>::Cast(js_func_mm_field);
                                         v8::Handle<v8::Value> args_changes[2];
                                         args_changes[0] = v8::Integer::New(v8::Isolate::GetCurrent(), nIndexMM);
-                                        args_changes[1] = v8::String::NewFromUtf8(isolate, (char*)sFieldUtf8.c_str());
+                                        args_changes[1] = CV8Convert::FromStringA(sFieldUtf8, isolate);
 
                                         v8::Local<v8::Value> js_result2 = func_mm_field->Call(js_objectApi, 2, args_changes);
 

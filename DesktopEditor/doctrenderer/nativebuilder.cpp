@@ -152,8 +152,7 @@ void _builder_doc_GetBinary(const v8::FunctionCallbackInfo<v8::Value>& args)
 void _builder_doc_GetFolder(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
     CBuilderDocumentEmbed* doc = unwrap_builder_doc_embed(args.This());
-    std::string sUtf8 = U_TO_UTF8((doc->m_sFolder));
-    args.GetReturnValue().Set(v8::String::NewFromUtf8(v8::Isolate::GetCurrent(), sUtf8.c_str()));
+    args.GetReturnValue().Set(CV8Convert::FromStringW(doc->m_sFolder));
 }
 void _builder_doc_CloseFile(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
@@ -171,13 +170,7 @@ void _builder_doc_GetImageMap(const v8::FunctionCallbackInfo<v8::Value>& args)
         std::wstring sFile = *i; NSCommon::string_replace(sFile, L"\\", L"/");
         std::wstring sName = L"media/" + NSFile::GetFileName(sFile);
 
-        std::string sFileA = U_TO_UTF8(sFile);
-        std::string sNameA = U_TO_UTF8(sName);
-
-        v8::Local<v8::String> _k = v8::String::NewFromUtf8(v8::Isolate::GetCurrent(), sNameA.c_str(), v8::String::kNormalString, -1);
-        v8::Local<v8::String> _v = v8::String::NewFromUtf8(v8::Isolate::GetCurrent(), sFileA.c_str(), v8::String::kNormalString, -1);
-
-        obj->Set(_k, _v);
+        obj->Set(CV8Convert::FromStringW(sName), CV8Convert::FromStringW(sFile));
     }
 
     args.GetReturnValue().Set(obj);

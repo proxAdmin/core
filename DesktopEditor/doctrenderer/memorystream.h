@@ -62,7 +62,7 @@ public:
 	}
 	static bool ToBool(const v8::Local<v8::Value>& v)
 	{
-		return v->ToBoolean(v8::Isolate::GetCurrent()->GetCurrentContext()).FromMaybe(v8::Local<v8::Boolean>())->Value();
+        return v->ToBoolean(v8::Isolate::GetCurrent())->Value();
 	}
 	static std::wstring ToString(v8::Local<v8::Value> v)
 	{
@@ -88,6 +88,100 @@ public:
 	{
 		return ToString(m->Get());
 	}
+    static v8::Local<v8::Object> GetObjectProperty(v8::Local<v8::Object> obj, v8::Local<v8::Context> context, const std::string& name, v8::Isolate* i = NULL)
+    {
+#ifdef V8_VERSION_8_PLUS
+        return obj->Get(context, FromStringA(name, i));
+#else
+        return obj->Get(FromStringA(name, i));
+#endif
+    }
+
+    static v8::Local<v8::String> FromStringA(const std::string& str, v8::Isolate* i = NULL)
+    {
+#ifdef V8_VERSION_8_PLUS
+        return v8::String::NewFromUtf8((NULL != i) ? i : v8::Isolate::GetCurrent(), str.c_str()).ToLocalChecked();
+#else
+        return v8::String::NewFromUtf8((NULL != i) ? i : v8::Isolate::GetCurrent(), str.c_str()).ToLocalChecked();
+#endif
+    }
+    static v8::Local<v8::String> FromStringW(const std::wstring& str, v8::Isolate* i = NULL, int len = -1)
+    {
+        std::string strA = U_TO_UTF8(str);
+        return FromStringA(strA, i);
+    }
+    static v8::Local<v8::String> FromCharPtr(const char* str, v8::Isolate* i = NULL, int len = -1)
+    {
+#ifdef V8_VERSION_8_PLUS
+        return v8::String::NewFromUtf8((NULL != i) ? i : v8::Isolate::GetCurrent(), str, v8::NewStringType::kNormal, len).ToLocalChecked();
+#else
+        return v8::String::NewFromUtf8((NULL != i) ? i : v8::Isolate::GetCurrent(), str, v8::String::kNormalString, len).ToLocalChecked();
+#endif
+    }
+};
+
+class CV8Function
+{
+public:
+    v8::Local<v8::Function> m_object;
+    v8::Isolate* m_isolate;
+    v8::Local<v8::Context> m_context;
+
+public:
+    CV8Function()
+    {
+        m_isolate = NULL;
+    }
+
+    bool IsValid()
+    {
+        return !m_object.IsEmpty();
+    }
+
+    v8::Local<v8::Value> Call(v8::Handle<v8::Value> recv, int argc, v8::Handle<v8::Value> argv[])
+    {
+#ifdef V8_VERSION_8_PLUS
+        return m_object->Call(m_context, recv, argc, argv);
+#else
+        return m_object->Call(recv, argc, argv);
+#endif
+    }
+};
+
+class CV8Object
+{
+public:
+    v8::Local<v8::Object> m_object;
+    v8::Isolate* m_isolate;
+    v8::Local<v8::Context> m_context;
+
+public:
+    CV8Object(v8::Isolate* i, v8::Local<v8::Context> c)
+    {
+        m_isolate = i;
+        m_context = c;
+        m_object = context->Global();
+    }
+
+    v8::Local<v8::Value> Get(const std::string& name)
+    {
+#ifdef V8_VERSION_8_PLUS
+        return m_object->Get(m_context, CV8Convert::FromStringA(name));
+#else
+        return m_object->Get(CV8Convert::FromStringA(name), m_isolate);
+#endif
+    }
+
+    CV8Function GetFunction(const std::string& name)
+    {
+#ifdef V8_VERSION_8_PLUS
+        v8::Local<v8::Value> js_func_test = m_object->Get(m_context, CV8Convert::FromStringA(name, m_isolate));
+#else
+        v8::Local<v8::Value> js_func_test = m_object->Get(CV8Convert::FromStringA(name, m_isolate));
+#endif
+        CV8Function func;
+        if (js_function)
+    }
 };
 
 class CMemoryStream
